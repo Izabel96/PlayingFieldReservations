@@ -1,11 +1,13 @@
 package app.PlayingFieldReservations.entitites;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public abstract class User {
 	
 	private String username;
+	@Id
 	private String password;
 	
 	public User(String username, String password) {

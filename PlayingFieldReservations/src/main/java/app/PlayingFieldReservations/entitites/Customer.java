@@ -1,13 +1,12 @@
 package app.PlayingFieldReservations.entitites;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
 
 @Entity
 public class Customer extends User {
 	
-	@Id @GeneratedValue
+	
 	private int customerId;
 	private String firstName;
 	private String lastName;

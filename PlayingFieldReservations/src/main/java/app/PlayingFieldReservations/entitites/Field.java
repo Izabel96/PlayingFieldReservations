@@ -19,17 +19,8 @@ public class Field {
 	
 	
 	
-	public Field(int fieldId, String fieldName, String location, String type, String state, double price, String contactInformation,
-			String workingHours) {
+	public Field() {
 		super();
-		this.fieldId = fieldId;
-		this.fieldName = fieldName;
-		this.location = location;
-		this.type = type;
-		this.state = state;
-		this.price = price;
-		this.contactInformation = contactInformation;
-		this.workingHours = workingHours;
 	}
 	
 	

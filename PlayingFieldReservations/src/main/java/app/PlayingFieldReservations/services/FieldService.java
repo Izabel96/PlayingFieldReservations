@@ -23,6 +23,7 @@ public class FieldService {
 	}
 	
 	public Iterable<Field> getAllFields(){
+		
 		return fieldRepository.findAll();
 	}
 	
