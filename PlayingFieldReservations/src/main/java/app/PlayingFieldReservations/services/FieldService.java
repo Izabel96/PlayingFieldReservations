@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 
 import app.PlayingFieldReservations.entitites.Field;
 import app.PlayingFieldReservations.repositories.FieldRepository;
+import org.springframework.http.ResponseEntity;
+import org.hibernate.mapping.Map;
+import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
 
 @Service
 public class FieldService {
@@ -12,7 +15,9 @@ public class FieldService {
 	@Autowired
 	FieldRepository fieldRepository;
 	
-	Iterable<Field> fields;
+
+	
+	ResponseEntity<Field> fields;
 	
 	public void addNewField(Field field) {
 		fieldRepository.save(field);
@@ -23,7 +28,6 @@ public class FieldService {
 	}
 	
 	public Iterable<Field> getAllFields(){
-		
 		return fieldRepository.findAll();
 	}
 	
