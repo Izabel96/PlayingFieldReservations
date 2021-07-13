@@ -26,7 +26,7 @@ public class FieldController {
 
 		return response;
 	}
-	@PostMapping("/fields")
+	@PostMapping("/all_fields")
 	public void addNewField(@RequestBody Field field) {
 		fieldService.addNewField(field);
 	}
