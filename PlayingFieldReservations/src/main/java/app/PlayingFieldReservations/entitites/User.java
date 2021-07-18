@@ -9,13 +9,11 @@ public abstract class User {
 	private String username;
 	@Id
 	private String password;
-	
-	public User(String username, String password) {
+
+	public User() {
 		super();
-		this.username = username;
-		this.password = password;
 	}
-	
+
 	public String getUsername() {
 		return username;
 	}

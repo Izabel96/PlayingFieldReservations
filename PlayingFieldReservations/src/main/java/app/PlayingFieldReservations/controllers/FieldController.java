@@ -31,13 +31,15 @@ public class FieldController {
 		return fieldService.getAllFields();
 	}
 	
+	
+	
 	@GetMapping(path = "/logout")
     public String logout(HttpServletRequest request) throws ServletException {
         request.logout();
         return "You have successfully logged out!";
     }
 	
-	@PostMapping("/all_fields")
+	@PostMapping("/add_new_field")
 	public void addNewField(@RequestBody Field field) {
 		fieldService.addNewField(field);
 	}

@@ -13,13 +13,8 @@ public class Company extends User {
 	private int companyPhoneNumber;
 	private String adress;
 	
-	public Company(String username, String password, int companyId, String companyName, String email, int companyPhoneNumber, String adress) {
-		super(username, password);
-		this.companyId = companyId;
-		this.companyName = companyName;
-		this.email = email; 
-		this.companyPhoneNumber = companyPhoneNumber;
-		this.adress = adress;
+	public Company() {
+		super();
 	}
 
 	public int getCompanyId() {

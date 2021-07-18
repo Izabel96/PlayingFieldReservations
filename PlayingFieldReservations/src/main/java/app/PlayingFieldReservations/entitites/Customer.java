@@ -5,21 +5,16 @@ import javax.persistence.Entity;
 
 @Entity
 public class Customer extends User {
-	
-	
+
+
 	private int customerId;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private int phoneNumber;
 
-	public Customer(String username, String password, int customerId, String firstName, String lastName, String email, int phoneNumber) {
-		super(username, password);
-		this.customerId = customerId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
+	public Customer() {
+		super();
 	}
 
 	public int getCustomerId() {
@@ -61,7 +56,25 @@ public class Customer extends User {
 	public void setPhoneNumber(int phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
-	
-	
+
+
+	@Override
+	public String getUsername() {
+		return super.getUsername();
+	}
+
+	@Override
+	public void setUsername(String username) {
+		super.setUsername(username);
+	}
+
+	@Override
+	public String getPassword() {
+		return super.getPassword();
+	}
+
+	@Override
+	public void setPassword(String password) {
+		super.setPassword(password);
+	}
 }

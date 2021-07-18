@@ -9,9 +9,8 @@ public class Admin extends User {
 	
 	private int id;
 	
-	public Admin(String username, String password, int id) {
-		super(username, password);
-		this.id = id;
+	public Admin() {
+		super();
 	}
 
 	public int getId() {
