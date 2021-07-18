@@ -2,18 +2,22 @@ package app.PlayingFieldReservations.controllers;
 
 
 import app.PlayingFieldReservations.entitites.Customer;
+import app.PlayingFieldReservations.entitites.Field;
 import app.PlayingFieldReservations.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CustomerController {
 
     @Autowired
     CustomerService customerService;
+
+
+    @GetMapping("/viewAllFields")
+    public Iterable<Field> viewAllFields() {
+        return customerService.viewFieldInformation();
+    }
 
     @PostMapping("/register")
     public String addNewCustomer(@RequestBody Customer customer){
