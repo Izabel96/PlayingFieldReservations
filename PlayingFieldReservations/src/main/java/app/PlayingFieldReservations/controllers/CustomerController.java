@@ -14,11 +14,6 @@ public class CustomerController {
     CustomerService customerService;
 
 
-    @GetMapping("/viewAllFields")
-    public Iterable<Field> viewAllFields() {
-        return customerService.viewFieldInformation();
-    }
-
     @PostMapping("/register")
     public String addNewCustomer(@RequestBody Customer customer){
         customerService.addRegisteredCustomer(customer);
