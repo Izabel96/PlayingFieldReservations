@@ -52,12 +52,15 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception
     {
         super.configure(http);
-        http.authorizeRequests()
-                .antMatchers("/", "/register", "/viewAllFields", "/add_new_field").permitAll()
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/", "/register", "/view_all_fields", "/add_new_field").permitAll()
                 .antMatchers("/login_or_register").hasRole("customer")
                 .antMatchers("/login_company_admin").hasRole("company")
                 .antMatchers("/login_company_admin").hasRole("admin")
                 //TODO: add the rest of link that need authentification
                 .anyRequest().permitAll();
+
+
     }
 }

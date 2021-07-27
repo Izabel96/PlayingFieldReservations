@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 public class AdminService {
     CompanyRepository companyRepository;
 
+    public void viewAllCompanies(){
+        companyRepository.findAll();
+    }
+
     public void addCompany(Company company){
         //TODO: check if company already exists
         companyRepository.save(company);

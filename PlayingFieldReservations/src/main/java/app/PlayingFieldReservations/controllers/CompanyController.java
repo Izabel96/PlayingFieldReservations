@@ -24,12 +24,12 @@ public class CompanyController {
         return ("Company information successfully updated!");
     }
 
-    @PostMapping("/add_new_field") //TODO: log in to add field
+    @PostMapping("/add_new_field") //tested with no login, works TODO: log in to add field
     public void addNewField(@RequestBody Field field) {
         fieldService.addNewField(field);
     }
 
-    @DeleteMapping("/delete_field/{fieldId}")
+    @DeleteMapping("/delete_field/{fieldId}") //doesnt work needs debugging
     public String removeField(int fieldId){
         fieldService.deleteField(fieldId);
 

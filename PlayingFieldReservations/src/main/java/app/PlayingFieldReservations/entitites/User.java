@@ -1,14 +1,17 @@
 package app.PlayingFieldReservations.entitites;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity
+
+@MappedSuperclass
 public abstract class User {
 	
 	private String username;
-	@Id
 	private String password;
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
 	public User() {
 		super();

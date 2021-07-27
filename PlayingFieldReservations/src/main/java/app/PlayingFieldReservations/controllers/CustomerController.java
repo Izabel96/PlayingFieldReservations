@@ -14,7 +14,7 @@ public class CustomerController {
     CustomerService customerService;
 
 
-    @PostMapping("/register")
+    @PostMapping("/register") //tested, works
     public String addNewCustomer(@RequestBody Customer customer){
         customerService.addRegisteredCustomer(customer);
         return "Customer successfully registered!";

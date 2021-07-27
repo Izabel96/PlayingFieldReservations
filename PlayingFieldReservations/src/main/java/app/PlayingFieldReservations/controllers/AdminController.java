@@ -3,6 +3,7 @@ package app.PlayingFieldReservations.controllers;
 import app.PlayingFieldReservations.entitites.Company;
 import app.PlayingFieldReservations.services.AdminService;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +16,11 @@ public class AdminController {
         adminService.addCompany(company);
 
         return String.format("Company %s successfully added!", company.getCompanyName());
+    }
+
+    @GetMapping("/view_all_companies")
+    public void viewAllCompanies(){
+        adminService.viewAllCompanies();
     }
 
     @DeleteMapping("/delete_company")
