@@ -22,27 +22,40 @@ public class FieldService {
 	ResponseEntity<Field> fields;
 	
 	public void addNewField(Field field) {
-		//TODO: check if field already exists
-		fieldRepository.save(field);
+		if(fieldRepository.findAll().contains(field)){
+			System.out.println("This field already exists!");
+		}else {
+			fieldRepository.save(field);
+		}
 	}
 
 	@Transactional
 	public void deleteField(int fieldId) {
-		//TODO: check for field in database
-		fieldRepository.deleteById(fieldId);
+		if(fieldRepository.findByFieldId(fieldId) == null){
+			System.out.println("There is no field with this id.");
+		}else {
+			fieldRepository.deleteById(fieldId);
+		}
 	}
 	
 	public Iterable<Field> getAllFields(){
-
+		if(fieldRepository.findAll() == null){
+			System.out.println("There are no available fields.");
+			return null;
+		}
 		return fieldRepository.findAll();
+
 	}
 	
 	public Field getFieldById(int fieldId){
-
+		if(fieldRepository.findByFieldId(fieldId) == null){
+			System.out.println("There is no customer with this id.");
+			return null;
+		}
 		return fieldRepository.findByFieldId(fieldId);
 	}
 
 	public void reserve(String username, Field field) {
-		
+		//TODO: implement
 	}
 }

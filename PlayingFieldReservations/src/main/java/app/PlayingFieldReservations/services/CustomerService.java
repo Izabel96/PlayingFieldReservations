@@ -25,8 +25,11 @@ public class CustomerService extends UserService {
     }
 
     public void addRegisteredCustomer(Customer customer){ //TODO: take customer from keycloak and add to MySQL!!
-
-        customerRepository.save(customer);
+        if(customerRepository.findAll().contains(customer)){
+            System.out.println("This customer already exists!");
+        }else {
+            customerRepository.save(customer);
+        }
     }
 
     public void changePersonalInformation(Customer newCustomerData, int customerId){ //TODO: connection with keycloak
