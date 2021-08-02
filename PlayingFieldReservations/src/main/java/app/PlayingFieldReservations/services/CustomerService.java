@@ -9,13 +9,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomerService extends UserService {
 
+
+
     @Autowired
     CustomerRepository customerRepository;
 
     @Override
-    public String reserveField(Field field) { //TODO: Implement
+    public String reserveField(String username, Field field, String duration) { //TODO: Implement
 
-        return super.reserveField(field);
+        return super.reserveField(username, field, duration);
     }
 
     @Override

@@ -18,8 +18,8 @@ public class UserService {
 		
 	}
 	
-	public String reserveField(Field field) {
-		//TODO: implement logic
+	public String reserveField(String username, Field field, String duration) {
+		//TODO: Get username
 		String toReturn = "Field successfully reserved!"; //TODO: print out field name
 		return toReturn;
 	

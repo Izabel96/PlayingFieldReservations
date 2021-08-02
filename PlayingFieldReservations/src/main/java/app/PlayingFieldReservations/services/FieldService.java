@@ -1,5 +1,7 @@
 package app.PlayingFieldReservations.services;
 
+import app.PlayingFieldReservations.entitites.Reservation;
+import app.PlayingFieldReservations.repositories.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,9 @@ public class FieldService {
 	
 	@Autowired
 	FieldRepository fieldRepository;
-	
+	@Autowired
+	ReservationRepository reservationRepository;
 
-	
-	ResponseEntity<Field> fields;
 	
 	public void addNewField(Field field) {
 		if(fieldRepository.findAll().contains(field)){
@@ -55,7 +56,17 @@ public class FieldService {
 		return fieldRepository.findByFieldId(fieldId);
 	}
 
-	public void reserve(String username, Field field) {
-		//TODO: implement
+	public String reserve(String username, Field field, String duration) {
+		Reservation reservation = new Reservation();
+		reservation.setFieldName(field.getFieldName());
+		reservation.setMadeBy(username);
+		reservation.setReservationDuration(duration);
+
+		reservationRepository.save(reservation);
+		Long reservationId = reservationRepository.returnReservation(reservation).getId();
+
+		return String.format("Field %s reserved by %s for duration %s. Your reservation id is %d.",
+				field.getFieldName(), username, duration,reservationId);
+
 	}
 }

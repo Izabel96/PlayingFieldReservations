@@ -3,6 +3,7 @@ package app.PlayingFieldReservations.controllers;
 
 import app.PlayingFieldReservations.entitites.Customer;
 import app.PlayingFieldReservations.entitites.Field;
+import app.PlayingFieldReservations.entitites.Reservation;
 import app.PlayingFieldReservations.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,16 @@ public class CustomerController {
         customerService.changePersonalInformation(newCustomerData, customerId);
 
         return ("Customer information successfully updated!");
+    }
+
+    @PutMapping("/reserve_field")
+    public void reserveField(){
+
+    }
+
+    @DeleteMapping("cancel_reservation")
+    public void cancelReservation(){
+
     }
 
 
