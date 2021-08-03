@@ -15,15 +15,15 @@ public class CustomerService extends UserService {
     CustomerRepository customerRepository;
 
     @Override
-    public String reserveField(String username, Field field, String duration) { //TODO: Implement
+    public String reserveField(String username, Field field, String duration) { //TODO: login
 
         return super.reserveField(username, field, duration);
     }
 
     @Override
-    public String cancelReservation() { //TODO: Implement
+    public String cancelReservation(long reservationId, String fieldName) { //TODO: login
 
-        return super.cancelReservation();
+        return super.cancelReservation(reservationId, fieldName);
     }
 
     public void addRegisteredCustomer(Customer customer){ //TODO: take customer from keycloak and add to MySQL!!

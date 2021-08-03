@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     Reservation returnReservation(Reservation reservation);
+    Reservation findByResercationId(long reservationId);
 }

@@ -11,4 +11,6 @@ public interface FieldRepository extends JpaRepository<Field, Integer> {
 	
 	Field findByFieldId(int fieldId);
 
+	Field findByFieldName(String fieldName);
+
 }

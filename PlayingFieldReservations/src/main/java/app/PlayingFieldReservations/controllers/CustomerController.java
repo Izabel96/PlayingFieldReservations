@@ -29,12 +29,14 @@ public class CustomerController {
     }
 
     @PutMapping("/reserve_field")
-    public void reserveField(){
+    public String reserveField(String username, Field field, String duration){
+        return customerService.reserveField(username, field, duration);
 
     }
 
     @DeleteMapping("cancel_reservation")
-    public void cancelReservation(){
+    public String cancelReservation(long reservationId, String fieldName){
+        return customerService.cancelReservation(reservationId, fieldName);
 
     }
 

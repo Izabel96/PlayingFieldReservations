@@ -1,5 +1,7 @@
 package app.PlayingFieldReservations.services;
 
+import app.PlayingFieldReservations.entitites.Reservation;
+import app.PlayingFieldReservations.repositories.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ public class UserService {
 
 	@Autowired
 	FieldService fieldService;
+	ReservationRepository reservationRepository;
 	
 	public Iterable<Field> viewFieldInformation()	{
 		
@@ -19,14 +22,14 @@ public class UserService {
 	}
 	
 	public String reserveField(String username, Field field, String duration) {
-		//TODO: Get username
-		String toReturn = "Field successfully reserved!"; //TODO: print out field name
-		return toReturn;
+		return fieldService.reserve(username, field, duration);
 	
 	}
 	
-	public String cancelReservation() {
-		//TODO: implement logic
+	public String cancelReservation(long reservationId, String fieldName) {
+		Reservation toCancel =  reservationRepository.findByResercationId(reservationId);
+		fieldService.changeFieldState(fieldName, "Available");
+		reservationRepository.delete(toCancel);
 		return "Reservation successfully canceled!";
 		
 	}

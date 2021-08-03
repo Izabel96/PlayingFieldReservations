@@ -56,6 +56,14 @@ public class FieldService {
 		return fieldRepository.findByFieldId(fieldId);
 	}
 
+	public void changeFieldState(String name, String state){
+		fieldRepository.findByFieldName(name).setState(state);
+	}
+
+	public Field getFieldByName(String name){
+		return fieldRepository.findByFieldName(name);
+	}
+
 	public String reserve(String username, Field field, String duration) {
 		Reservation reservation = new Reservation();
 		reservation.setFieldName(field.getFieldName());
@@ -64,6 +72,9 @@ public class FieldService {
 
 		reservationRepository.save(reservation);
 		Long reservationId = reservationRepository.returnReservation(reservation).getId();
+
+		int fieldId = field.getFieldId();
+		fieldRepository.getOne(fieldId).setState("Reserved for " + duration);
 
 		return String.format("Field %s reserved by %s for duration %s. Your reservation id is %d.",
 				field.getFieldName(), username, duration,reservationId);
