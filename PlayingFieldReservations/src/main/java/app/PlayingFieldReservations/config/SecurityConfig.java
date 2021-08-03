@@ -54,11 +54,11 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         super.configure(http);
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/register", "/view_all_fields", "/add_new_field").permitAll()
-                .antMatchers("/login_or_register").hasRole("customer")
-                .antMatchers("/login_company_admin").hasRole("company")
-                .antMatchers("/login_company_admin").hasRole("admin")
-                //TODO: add the rest of link that need authentification
+                .antMatchers("/", "/register", "/view_all_fields", "/add_new_field", "add_companys").permitAll()
+                .antMatchers("/customerInformation", "/reserve_field", "/cancel_reservation").hasRole("customer")
+                .antMatchers("/change_company_information", "/add_new_field", "/delete_field/{fieldId}").hasRole("company")
+                .antMatchers("/view_all_companies", "/view_all_customers",
+                        "/delete_company", "/delete_customer").hasRole("admin")
                 .anyRequest().permitAll();
 
 

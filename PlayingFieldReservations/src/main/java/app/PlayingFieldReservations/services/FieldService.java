@@ -2,6 +2,7 @@ package app.PlayingFieldReservations.services;
 
 import app.PlayingFieldReservations.entitites.Reservation;
 import app.PlayingFieldReservations.repositories.ReservationRepository;
+import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,20 +65,22 @@ public class FieldService {
 		return fieldRepository.findByFieldName(name);
 	}
 
-	public String reserve(String username, Field field, String duration) {
+	public String reserve(String madeBy, Field field, String duration) {
 		Reservation reservation = new Reservation();
 		reservation.setFieldName(field.getFieldName());
-		reservation.setMadeBy(username);
+		reservation.setMadeBy(madeBy);
 		reservation.setReservationDuration(duration);
 
+
 		reservationRepository.save(reservation);
-		Long reservationId = reservationRepository.returnReservation(reservation).getId();
+		Long reservationId = reservationRepository.findByMadeBy(madeBy).getId();
+
 
 		int fieldId = field.getFieldId();
 		fieldRepository.getOne(fieldId).setState("Reserved for " + duration);
 
 		return String.format("Field %s reserved by %s for duration %s. Your reservation id is %d.",
-				field.getFieldName(), username, duration,reservationId);
+				field.getFieldName(), madeBy, duration,reservationId);
 
 	}
 }

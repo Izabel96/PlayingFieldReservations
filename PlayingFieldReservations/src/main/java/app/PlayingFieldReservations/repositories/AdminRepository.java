@@ -5,6 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import app.PlayingFieldReservations.entitites.Admin;
 
+
 public interface AdminRepository extends JpaRepository<Admin, Integer> {
 
 }

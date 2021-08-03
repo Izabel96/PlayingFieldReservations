@@ -21,13 +21,13 @@ public class UserService {
 		
 	}
 	
-	public String reserveField(String username, Field field, String duration) {
-		return fieldService.reserve(username, field, duration);
+	public String reserveField(String madeBy, Field field, String duration) {
+		return fieldService.reserve(madeBy, field, duration);
 	
 	}
 	
 	public String cancelReservation(long reservationId, String fieldName) {
-		Reservation toCancel =  reservationRepository.findByResercationId(reservationId);
+		Reservation toCancel =  reservationRepository.findById(reservationId);
 		fieldService.changeFieldState(fieldName, "Available");
 		reservationRepository.delete(toCancel);
 		return "Reservation successfully canceled!";

@@ -2,16 +2,13 @@ package app.PlayingFieldReservations.controllers;
 
 import app.PlayingFieldReservations.entitites.Company;
 import app.PlayingFieldReservations.services.AdminService;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AdminController {
     AdminService adminService;
 
-    @PutMapping("/add_company")
+    @PostMapping("/add_company")
     public String addCompany(Company company){ //TODO:login as admin to do this
         adminService.addCompany(company);
 

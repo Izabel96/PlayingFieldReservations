@@ -15,9 +15,9 @@ public class CustomerService extends UserService {
     CustomerRepository customerRepository;
 
     @Override
-    public String reserveField(String username, Field field, String duration) { //TODO: login
+    public String reserveField(String madeBy, Field field, String duration) { //TODO: login
 
-        return super.reserveField(username, field, duration);
+        return super.reserveField(madeBy, field, duration);
     }
 
     @Override
