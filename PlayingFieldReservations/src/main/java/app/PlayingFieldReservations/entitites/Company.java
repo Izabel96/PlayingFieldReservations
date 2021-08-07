@@ -11,7 +11,7 @@ public class Company extends User {
 	private String companyName;
 	private String email;
 	private int companyPhoneNumber;
-	private String adress;
+	private String address;
 	
 	public Company() {
 		super();
@@ -50,11 +50,11 @@ public class Company extends User {
 	}
 
 	public String getAdress() {
-		return adress;
+		return address;
 	}
 
 	public void setAdress(String adress) {
-		this.adress = adress;
+		this.address = adress;
 	}
 	
 }

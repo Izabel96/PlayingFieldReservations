@@ -5,19 +5,23 @@ import app.PlayingFieldReservations.entitites.Company;
 import app.PlayingFieldReservations.entitites.Customer;
 import app.PlayingFieldReservations.repositories.CompanyRepository;
 import app.PlayingFieldReservations.repositories.CustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AdminService {
+    @Autowired
     CompanyRepository companyRepository;
+    @Autowired
     CustomerRepository customerRepository;
 
-    public void viewAllCompanies(){
-        companyRepository.findAll();
+    public Iterable<Company> viewAllCompanies(){ //works TODO: add check if empty
+
+        return companyRepository.findAll();
     }
 
-    public void viewAllCustomers(){
-        customerRepository.findAll();
+    public Iterable<Customer> viewAllCustomers(){ //works TODO: add check if empty
+        return customerRepository.findAll();
 
     }
 
