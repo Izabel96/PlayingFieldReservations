@@ -20,20 +20,20 @@ public class CustomerController {
         return "Customer successfully registered!";
     }
 
-    @PutMapping("/customerInformation")
-    public String changePersonalInformation(@RequestBody Customer newCustomerData, int customerId){
+    @PutMapping("/change_customer_Information/{customerId}") //doesn't work, expects long type for customerId
+    public String changePersonalInformation(@RequestBody Customer newCustomerData,@PathVariable int customerId){
         customerService.changePersonalInformation(newCustomerData, customerId);
 
         return ("Customer information successfully updated!");
     }
 
-    @PutMapping("/reserve_field")
+    @PutMapping("/reserve_field") //not tested
     public String reserveField(String madeBy, Field field, String duration){
         return customerService.reserveField(madeBy, field, duration);
 
     }
 
-    @DeleteMapping("cancel_reservation")
+    @DeleteMapping("cancel_reservation") //not tested
     public String cancelReservation(long reservationId, String fieldName){
         return customerService.cancelReservation(reservationId, fieldName);
 

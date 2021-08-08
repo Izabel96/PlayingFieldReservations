@@ -15,22 +15,19 @@ public class AdminService {
     @Autowired
     CustomerRepository customerRepository;
 
-    public Iterable<Company> viewAllCompanies(){ //works TODO: add check if empty
-
+    public Iterable<Company> viewAllCompanies(){ //works TODO: add check if empty, see softuni projects
+        if(companyRepository.findAll() == null){
+        }
         return companyRepository.findAll();
     }
 
-    public Iterable<Customer> viewAllCustomers(){ //works TODO: add check if empty
+    public Iterable<Customer> viewAllCustomers(){ //works TODO: add check if empty, see softuni projects
         return customerRepository.findAll();
 
     }
 
-    public void addCompany(Company company){
-        if(companyRepository.findAll().contains(company)){
-            System.out.println("This company already exists!");
-        }else {
-            companyRepository.save(company);
-        }
+    public void addCompany(Company company){ //add check if it already exists
+        companyRepository.save(company);
     }
 
     public void removeCompany(int companyId){
@@ -43,11 +40,12 @@ public class AdminService {
     }
 
     public void removeCustomer(int customerId){
-        if(customerRepository.findById(customerId) == null){
-            System.out.println("There is no customer with this id.");
-        }else {
-            Customer toRemove = customerRepository.findById(customerId);
-            customerRepository.delete(toRemove);
-        }
+//        if(customerRepository.findById(customerId) == null){
+//            System.out.println("There is no customer with this id.");
+//        }else {
+//            Customer toRemove = customerRepository.findById(customerId);
+//            customerRepository.delete(toRemove);
+//        }
+        customerRepository.deleteByCustomerId(customerId);
     }
 }

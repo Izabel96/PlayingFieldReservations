@@ -8,6 +8,8 @@ import app.PlayingFieldReservations.services.FieldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
+
 @RestController
 public class CompanyController {
 
@@ -17,7 +19,7 @@ public class CompanyController {
     FieldService fieldService;
 
 
-    @PutMapping("/change_company_information") //TODO: log in to change info
+    @PutMapping("/change_company_information") //TODO: log in to change info //test after fixing add company
     public String changePersonalInformation(@RequestBody Company newCompanyData, int compannyId){
         companyService.changeCompanyInformation(newCompanyData, compannyId);
 
@@ -29,11 +31,12 @@ public class CompanyController {
         fieldService.addNewField(field);
     }
 
-    @DeleteMapping("/delete_field/{fieldId}") //doesnt work needs debugging
-    public String removeField(int fieldId){
+    @Transactional
+    @DeleteMapping("/delete_field/{fieldId}") //works
+    public String removeField(@PathVariable int fieldId){
         fieldService.deleteField(fieldId);
 
-        return String.format("Field with %d successfully deleted!", fieldId);
+        return String.format("Field with id %d successfully deleted!", fieldId);
     }
 
 

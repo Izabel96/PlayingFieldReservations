@@ -8,5 +8,6 @@ import app.PlayingFieldReservations.entitites.Customer;
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     Customer findById(int customerId);
+    void deleteByCustomerId(int customerId);
 
 }
