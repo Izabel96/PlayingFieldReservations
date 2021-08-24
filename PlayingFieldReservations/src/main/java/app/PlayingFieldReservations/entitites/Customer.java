@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Entity
 public class Customer extends User {
 
-	private int customerId;
+	private long customerId;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -16,11 +16,11 @@ public class Customer extends User {
 		super();
 	}
 
-	public int getCustomerId() {
+	public long getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(int customerId) {
+	public void setCustomerId(long customerId) {
 		this.customerId = customerId;
 	}
 

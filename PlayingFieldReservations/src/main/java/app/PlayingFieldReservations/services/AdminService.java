@@ -31,21 +31,13 @@ public class AdminService {
     }
 
     public void removeCompany(int companyId){
-        if(companyRepository.findById(companyId) == null){
-            System.out.println("There is no company with this id.");
-        }else {
-            Company toRemove = companyRepository.findById(companyId);
-            companyRepository.delete(toRemove);
-        }
+
+        companyRepository.deleteByCompanyId(companyId);
+
     }
 
-    public void removeCustomer(int customerId){
-//        if(customerRepository.findById(customerId) == null){
-//            System.out.println("There is no customer with this id.");
-//        }else {
-//            Customer toRemove = customerRepository.findById(customerId);
-//            customerRepository.delete(toRemove);
-//        }
+    public void removeCustomer(long customerId){
+
         customerRepository.deleteByCustomerId(customerId);
     }
 }

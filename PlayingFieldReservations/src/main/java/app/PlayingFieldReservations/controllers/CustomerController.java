@@ -21,7 +21,7 @@ public class CustomerController {
     }
 
     @PutMapping("/change_customer_Information/{customerId}") //doesn't work, expects long type for customerId
-    public String changePersonalInformation(@RequestBody Customer newCustomerData,@PathVariable int customerId){
+    public String changePersonalInformation(@RequestBody Customer newCustomerData,@PathVariable long customerId){
         customerService.changePersonalInformation(newCustomerData, customerId);
 
         return ("Customer information successfully updated!");

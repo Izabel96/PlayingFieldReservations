@@ -13,11 +13,11 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @PostMapping("/add_company") //not working, error 405
-    public void addCompany(@RequestBody Company company){ //TODO:login as admin to do this
+    @PostMapping("/add_company") //works
+    public String addCompany(@RequestBody Company company){ //TODO:login as admin to do this
         adminService.addCompany(company);
 
-//        return String.format("Company %s successfully added!", company.getCompanyName());
+        return "Company successfully added!";
     }
 
     @GetMapping("/view_all_companies")// works
@@ -33,9 +33,9 @@ public class AdminController {
     }
 
     @Transactional
-    @DeleteMapping("/delete_company/{id}") //should work, check after fixing add company!
-    public String deleteCompany(@PathVariable int id){ //TODO:login as admin to do this
-        adminService.removeCompany(id);
+    @DeleteMapping("/delete_company/{companyId}") //works
+    public String deleteCompany(@PathVariable int companyId){ //TODO:login as admin to do this
+        adminService.removeCompany(companyId);
 
         return ("Company removed.");
     }

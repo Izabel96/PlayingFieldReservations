@@ -8,4 +8,5 @@ import app.PlayingFieldReservations.entitites.Company;
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
     Company findById(int companyId);
+    void deleteByCompanyId(int companyId);
 }

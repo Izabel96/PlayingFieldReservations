@@ -14,13 +14,7 @@ public class UserService {
 	@Autowired
 	FieldService fieldService;
 	ReservationRepository reservationRepository;
-	
-	public Iterable<Field> viewFieldInformation()	{
-		
-		return fieldService.getAllFields();
-		
-	}
-	
+
 	public String reserveField(String madeBy, Field field, String duration) {
 		return fieldService.reserve(madeBy, field, duration);
 	

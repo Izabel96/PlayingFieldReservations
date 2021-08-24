@@ -1,13 +1,13 @@
 package app.PlayingFieldReservations.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
+
 
 import app.PlayingFieldReservations.entitites.Customer;
 
-public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-    Customer findById(int customerId);
-    void deleteByCustomerId(int customerId);
+    Customer findById(long customerId);
+    void deleteByCustomerId(long customerId);
 
 }
