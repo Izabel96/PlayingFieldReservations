@@ -19,14 +19,14 @@ public class CompanyController {
     FieldService fieldService;
 
 
-    @PutMapping("/change_company_information") //TODO: log in to change info //test after fixing add company
-    public String changePersonalInformation(@RequestBody Company newCompanyData, int compannyId){
-        companyService.changeCompanyInformation(newCompanyData, compannyId);
+    @PutMapping("/change_company_information/{phone}") //works //TODO: log in to change info //test after fixing add company
+    public String changePersonalInformation(@RequestBody Company newCompanyData, @PathVariable int phone){
+        companyService.changeCompanyInformation(newCompanyData, phone);
 
         return ("Company information successfully updated!");
     }
 
-    @PostMapping("/add_new_field") //tested with no login, works TODO: log in to add field
+    @PostMapping("/add_new_field") //works TODO: log in to add field
     public void addNewField(@RequestBody Field field) {
         fieldService.addNewField(field);
     }

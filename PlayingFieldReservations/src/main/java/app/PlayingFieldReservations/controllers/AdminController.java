@@ -2,6 +2,7 @@ package app.PlayingFieldReservations.controllers;
 
 import app.PlayingFieldReservations.entitites.Company;
 import app.PlayingFieldReservations.entitites.Customer;
+import app.PlayingFieldReservations.entitites.Reservation;
 import app.PlayingFieldReservations.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,12 @@ public class AdminController {
     public Iterable<Company> viewAllCompanies(){
 
         return adminService.viewAllCompanies();
+    }
+
+    @GetMapping("/view_all_reservations")// works
+    public Iterable<Reservation> viewAllReservations(){
+
+        return adminService.viewAllReservations();
     }
 
     @GetMapping("/view_all_customers") //works

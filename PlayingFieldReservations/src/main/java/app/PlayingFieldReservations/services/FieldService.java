@@ -57,30 +57,26 @@ public class FieldService {
 		return fieldRepository.findByFieldId(fieldId);
 	}
 
-	public void changeFieldState(String name, String state){
-		fieldRepository.findByFieldName(name).setState(state);
+	public void changeFieldState(int fieldId, String state){
+		Field toEdit = fieldRepository.findByFieldId(fieldId);
+		toEdit.setState(state);
 	}
 
-	public Field getFieldByName(String name){
-		return fieldRepository.findByFieldName(name);
-	}
-
-	public String reserve(String madeBy, Field field, String duration) {
+	public String reserve(String madeBy, int fieldId, String duration) { //state doesn't change, also fix problem with getting Reserve id
+		Field fieldToReserve = fieldRepository.findByFieldId(fieldId);
 		Reservation reservation = new Reservation();
-		reservation.setFieldName(field.getFieldName());
+		reservation.setFieldName(fieldToReserve.getFieldName());
 		reservation.setMadeBy(madeBy);
 		reservation.setReservationDuration(duration);
 
-
 		reservationRepository.save(reservation);
-		Long reservationId = reservationRepository.findByMadeBy(madeBy).getId();
+		long reservationId = reservationRepository.findByFieldNameAndReservationDuration(fieldToReserve.getFieldName(), duration).getId();
 
-
-		int fieldId = field.getFieldId();
-		fieldRepository.getOne(fieldId).setState("Reserved for " + duration);
+		String newState = String.format("Reserved for " + duration);
+		changeFieldState(fieldId, newState);
 
 		return String.format("Field %s reserved by %s for duration %s. Your reservation id is %d.",
-				field.getFieldName(), madeBy, duration,reservationId);
+				fieldToReserve.getFieldName(), madeBy, duration,reservationId);
 
 	}
 }

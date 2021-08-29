@@ -17,9 +17,9 @@ public class CompanyService extends UserService {
     FieldService fieldService;
 
 
-    public void changeCompanyInformation(Company newCompanyData, int companyId){ //TODO: connection with keycloak
+    public void changeCompanyInformation(Company newCompanyData, int phone){ //TODO: connection with keycloak
         //TODO: check if user is the same as the one being edited, else - exeption
-        Company companyToEdit = companyRepository.findById(companyId);
+        Company companyToEdit = companyRepository.findCompanyByCompanyPhoneNumber(phone);
         companyToEdit.setCompanyName(newCompanyData.getCompanyName());
         companyToEdit.setAdress(newCompanyData.getAdress());
         companyToEdit.setEmail(newCompanyData.getEmail());

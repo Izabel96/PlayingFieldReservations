@@ -10,7 +10,7 @@ public class Reservation {
     @Id
     @GeneratedValue
     private long id;
-    private String madeBy;
+    private String madeBy; //username of customer
     private String fieldName;
     private String reservationDuration;
 

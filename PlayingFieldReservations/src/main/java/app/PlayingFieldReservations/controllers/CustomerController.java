@@ -20,22 +20,22 @@ public class CustomerController {
         return "Customer successfully registered!";
     }
 
-    @PutMapping("/change_customer_Information/{customerId}") //doesn't work, expects long type for customerId
-    public String changePersonalInformation(@RequestBody Customer newCustomerData,@PathVariable long customerId){
-        customerService.changePersonalInformation(newCustomerData, customerId);
+    @PutMapping("/change_customer_Information/{phone}") //works add check to see if such customer exists
+    public String changePersonalInformation(@RequestBody Customer newCustomerData,@PathVariable int phone){
+        customerService.changePersonalInformation(newCustomerData, phone);
 
         return ("Customer information successfully updated!");
     }
 
-    @PutMapping("/reserve_field") //not tested
-    public String reserveField(String madeBy, Field field, String duration){
-        return customerService.reserveField(madeBy, field, duration);
+    @PutMapping("/reserve_field/{madeBy}/{fieldId}") //partially works problem with extracting id
+    public String reserveField(@PathVariable String madeBy, @PathVariable int fieldId, @RequestBody String duration){
+        return customerService.reserveField(madeBy, fieldId, duration);
 
     }
 
-    @DeleteMapping("cancel_reservation") //not tested
-    public String cancelReservation(long reservationId, String fieldName){
-        return customerService.cancelReservation(reservationId, fieldName);
+    @DeleteMapping("/cancel_reservation/{reservationId}/{fieldId}") //not tested
+    public String cancelReservation(@PathVariable long reservationId,@PathVariable int fieldId){
+        return customerService.cancelReservation(reservationId, fieldId);
 
     }
 

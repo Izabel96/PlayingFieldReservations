@@ -13,16 +13,18 @@ public class UserService {
 
 	@Autowired
 	FieldService fieldService;
+	@Autowired
 	ReservationRepository reservationRepository;
 
-	public String reserveField(String madeBy, Field field, String duration) {
-		return fieldService.reserve(madeBy, field, duration);
+	public String reserveField(String madeBy, int id, String duration) {
+		return fieldService.reserve(madeBy, id, duration);
 	
 	}
 	
-	public String cancelReservation(long reservationId, String fieldName) {
+	public String cancelReservation(long reservationId, int fieldId) {
 		Reservation toCancel =  reservationRepository.findById(reservationId);
-		fieldService.changeFieldState(fieldName, "Available");
+
+		fieldService.changeFieldState(fieldId, "Available");
 		reservationRepository.delete(toCancel);
 		return "Reservation successfully canceled!";
 		

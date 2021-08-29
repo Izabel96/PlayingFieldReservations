@@ -15,15 +15,15 @@ public class CustomerService extends UserService {
     CustomerRepository customerRepository;
 
     @Override
-    public String reserveField(String madeBy, Field field, String duration) { //TODO: login
+    public String reserveField(String madeBy, int id, String duration) { //TODO: login
 
-        return super.reserveField(madeBy, field, duration);
+        return super.reserveField(madeBy, id, duration);
     }
 
     @Override
-    public String cancelReservation(long reservationId, String fieldName) { //TODO: login
+    public String cancelReservation(long reservationId, int fieldId) { //works //TODO: login
 
-        return super.cancelReservation(reservationId, fieldName);
+        return super.cancelReservation(reservationId, fieldId);
     }
 
     public void addRegisteredCustomer(Customer customer){ //TODO: take customer from keycloak and add to MySQL!!
@@ -32,9 +32,9 @@ public class CustomerService extends UserService {
 
     }
 
-    public void changePersonalInformation(Customer newCustomerData, long customerId){ //TODO: connection with keycloak
+    public void changePersonalInformation(Customer newCustomerData, int phone){ //TODO: connection with keycloak
         //TODO: check if user is the same as the one being edited, else - exeption
-        Customer customerToEdit = customerRepository.findById(customerId);
+        Customer customerToEdit = customerRepository.findCustomerByPhoneNumber(phone);
         customerToEdit.setFirstName(newCustomerData.getFirstName());
         customerToEdit.setLastName(newCustomerData.getLastName());
         customerToEdit.setEmail(newCustomerData.getEmail());

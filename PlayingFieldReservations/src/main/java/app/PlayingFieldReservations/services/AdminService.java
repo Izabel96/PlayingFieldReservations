@@ -3,8 +3,10 @@ package app.PlayingFieldReservations.services;
 
 import app.PlayingFieldReservations.entitites.Company;
 import app.PlayingFieldReservations.entitites.Customer;
+import app.PlayingFieldReservations.entitites.Reservation;
 import app.PlayingFieldReservations.repositories.CompanyRepository;
 import app.PlayingFieldReservations.repositories.CustomerRepository;
+import app.PlayingFieldReservations.repositories.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ public class AdminService {
     CompanyRepository companyRepository;
     @Autowired
     CustomerRepository customerRepository;
+    @Autowired
+    ReservationRepository reservationRepository;
 
     public Iterable<Company> viewAllCompanies(){ //works TODO: add check if empty, see softuni projects
         if(companyRepository.findAll() == null){
@@ -23,6 +27,11 @@ public class AdminService {
 
     public Iterable<Customer> viewAllCustomers(){ //works TODO: add check if empty, see softuni projects
         return customerRepository.findAll();
+
+    }
+
+    public Iterable<Reservation> viewAllReservations(){ //works TODO: add check if empty, see softuni projects
+        return reservationRepository.findAll();
 
     }
 

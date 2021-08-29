@@ -5,9 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import app.PlayingFieldReservations.entitites.Customer;
 
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
-    Customer findById(long customerId);
+    Customer findCustomerByPhoneNumber(int phoneNumber);
     void deleteByCustomerId(long customerId);
 
 }
