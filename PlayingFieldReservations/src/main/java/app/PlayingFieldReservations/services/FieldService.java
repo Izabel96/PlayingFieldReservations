@@ -66,18 +66,23 @@ public class FieldService {
 	public String reserve(String madeBy, int fieldId, String duration) { //also fix problem with getting Reserve id
 		Field fieldToReserve = fieldRepository.findByFieldId(fieldId);
 		Reservation reservation = new Reservation();
-		reservation.setFieldName(fieldToReserve.getFieldName());
-		reservation.setMadeBy(madeBy);
-		reservation.setReservationDuration(duration);
 
-		reservationRepository.save(reservation);
-		long reservationId = reservationRepository.findByFieldNameAndReservationDuration(fieldToReserve.getFieldName(), duration).getId();
+		if(fieldToReserve.getState().contains(duration)){
+			return "The field is already reserved for this period. Please choose another one.";
+		}else {
+			reservation.setFieldName(fieldToReserve.getFieldName());
+			reservation.setMadeBy(madeBy);
+			reservation.setReservationDuration(duration);
+			reservationRepository.save(reservation);
+			long reservationId = reservationRepository.findByFieldNameAndReservationDuration(fieldToReserve.getFieldName(), duration).getId();
 
-		String newState = String.format("Reserved for " + duration);
-		changeFieldState(fieldId, newState);
+			String newState = String.format("Reserved for " + duration);
+			changeFieldState(fieldId, newState);
 
-		return String.format("Field %s reserved by %s for duration %s. Your reservation id is %d.",
-				fieldToReserve.getFieldName(), madeBy, duration,reservationId);
+			return String.format("Field %s reserved by %s for duration %s. Your reservation id is %d.",
+					fieldToReserve.getFieldName(), madeBy, duration,reservationId);
+		}
+
 
 	}
 }
