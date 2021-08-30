@@ -60,9 +60,10 @@ public class FieldService {
 	public void changeFieldState(int fieldId, String state){
 		Field toEdit = fieldRepository.findByFieldId(fieldId);
 		toEdit.setState(state);
+		fieldRepository.save(toEdit);
 	}
 
-	public String reserve(String madeBy, int fieldId, String duration) { //state doesn't change, also fix problem with getting Reserve id
+	public String reserve(String madeBy, int fieldId, String duration) { //also fix problem with getting Reserve id
 		Field fieldToReserve = fieldRepository.findByFieldId(fieldId);
 		Reservation reservation = new Reservation();
 		reservation.setFieldName(fieldToReserve.getFieldName());

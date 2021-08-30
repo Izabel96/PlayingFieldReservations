@@ -15,7 +15,7 @@ public class CustomerService extends UserService {
     CustomerRepository customerRepository;
 
     @Override
-    public String reserveField(String madeBy, int id, String duration) { //TODO: login
+    public String reserveField(String madeBy, int id, String duration) { // works but add check not to double book//TODO: login
 
         return super.reserveField(madeBy, id, duration);
     }
