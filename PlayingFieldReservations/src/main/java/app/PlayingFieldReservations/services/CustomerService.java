@@ -2,9 +2,13 @@ package app.PlayingFieldReservations.services;
 
 import app.PlayingFieldReservations.entitites.Customer;
 import app.PlayingFieldReservations.entitites.Field;
+import app.PlayingFieldReservations.entitites.Reservation;
 import app.PlayingFieldReservations.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Service
 public class CustomerService extends UserService {
@@ -42,6 +46,10 @@ public class CustomerService extends UserService {
 
         customerRepository.save(customerToEdit);
 
+    }
+
+    public Iterable<Reservation> getReservationHistory(String madeBy){
+        return reservationRepository.findAllByMadeBy(madeBy);
     }
 
 

@@ -3,6 +3,7 @@ package app.PlayingFieldReservations.controllers;
 
 import app.PlayingFieldReservations.entitites.Customer;
 import app.PlayingFieldReservations.entitites.Field;
+import app.PlayingFieldReservations.entitites.Reservation;
 import app.PlayingFieldReservations.services.AdminService;
 import app.PlayingFieldReservations.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,11 @@ public class CustomerController {
     public String cancelReservation(@PathVariable long reservationId,@PathVariable int fieldId){
         return adminService.cancelReservation(reservationId, fieldId);
 
+    }
+
+    @GetMapping("/get_reservations_made_by_user/{madeBy}")
+    public Iterable<Reservation> getReservationsByThisUser(@PathVariable String madeBy){
+        return customerService.getReservationHistory(madeBy);
     }
 
 
