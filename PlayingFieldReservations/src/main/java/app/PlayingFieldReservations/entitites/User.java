@@ -29,8 +29,13 @@ public abstract class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+
+	public long getId(){
+		return id;
+	}
+	public void setId(){
+		this.id = id;
+	}
 	
 	
 }

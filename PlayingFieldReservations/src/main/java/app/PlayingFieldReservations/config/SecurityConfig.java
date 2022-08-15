@@ -54,10 +54,11 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         super.configure(http);
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/register", "/view_all_fields", "/add_new_field", "add_company", "view_all_customers").permitAll()
+                .antMatchers("/", "/register", "/view_all_fields", "/add_new_field", "/delete_reservation/{reservationId}/{fieldId}", "add_company", "view_all_reservations").permitAll()
 //                .antMatchers("/customerInformation", "/reserve_field", "/cancel_reservation").hasRole("customer")
 //                .antMatchers("/change_company_information", "/add_new_field", "/delete_field/{fieldId}").hasRole("company")
-//                .antMatchers("/view_all_companies", "/view_all_customers", "/delete_company", "/delete_customer").hasRole("admin")
+//                .antMatchers("login_company_admin", "/view_all_companies", "/view_all_customers", "/delete_company", "/delete_customer").hasRole("admin")
+//                .antMatchers("/login_or_register_customers").hasRole("customer")
                 .anyRequest().permitAll();
 
 

@@ -63,7 +63,7 @@ public class FieldService {
 		fieldRepository.save(toEdit);
 	}
 
-	public String reserve(String madeBy, int fieldId, String duration) { //also fix problem with getting Reserve id
+	public String reserve(String madeBy, int fieldId, String duration) { 
 		Field fieldToReserve = fieldRepository.findByFieldId(fieldId);
 		Reservation reservation = new Reservation();
 

@@ -30,17 +30,16 @@ public class MainController {
         return fieldService.getAllFields();
     }
 
-//    @GetMapping("/login_or_register_customers")
-//    public String loginRegister(){
-//        return "You have successfully
-//        logged in!";
-//       //redirects to keycloak for login/register form
-//    }
-//
-//    @GetMapping("login_company_admin")
-//    public void logIn(){
-//        //TODO: check if registration can be removed for company and admin
-//    }
+    @GetMapping("/login_or_register_customers")
+    public String loginRegister(){
+        return "You have successfully logged in!";
+       //redirects to keycloak for login/register form
+    }
+
+    @GetMapping("login_company_admin")
+    public void logIn(){
+        //TODO: check if registration can be removed for company and admin
+    }
 	
 	
 	@GetMapping(path = "/logout") //tested, works

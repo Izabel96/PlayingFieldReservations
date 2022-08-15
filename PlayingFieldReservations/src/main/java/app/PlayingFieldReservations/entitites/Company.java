@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 public class Company extends User {
 
 	
-	private int companyId;
+	private long companyId;
 	private String companyName;
 	private String email;
 	private int companyPhoneNumber;
@@ -17,12 +17,13 @@ public class Company extends User {
 		super();
 	}
 
-	public int getCompanyId() {
-		return companyId;
+
+	public long getCompanyId() {
+		return super.getId();
 	}
 
 	public void setCompanyId(int companyId) {
-		this.companyId = companyId;
+		super.setId();
 	}
 
 	public String getCompanyName() {

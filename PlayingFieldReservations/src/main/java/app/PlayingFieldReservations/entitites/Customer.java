@@ -17,11 +17,11 @@ public class Customer extends User {
 	}
 
 	public long getCustomerId() {
-		return customerId;
+		return super.getId();
 	}
 
 	public void setCustomerId(long customerId) {
-		this.customerId = customerId;
+		super.setId();
 	}
 
 	public String getFirstName() {

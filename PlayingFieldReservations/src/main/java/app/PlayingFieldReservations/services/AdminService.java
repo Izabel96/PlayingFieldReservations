@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdminService {
+public class AdminService extends UserService {
     @Autowired
     CompanyRepository companyRepository;
     @Autowired
@@ -48,5 +48,11 @@ public class AdminService {
     public void removeCustomer(long customerId){
 
         customerRepository.deleteByCustomerId(customerId);
+    }
+
+    @Override
+    public String cancelReservation(long reservationId, int fieldId){
+
+        return super.cancelReservation(reservationId, fieldId);
     }
 }

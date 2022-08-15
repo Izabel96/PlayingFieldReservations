@@ -3,6 +3,7 @@ package app.PlayingFieldReservations.controllers;
 
 import app.PlayingFieldReservations.entitites.Customer;
 import app.PlayingFieldReservations.entitites.Field;
+import app.PlayingFieldReservations.services.AdminService;
 import app.PlayingFieldReservations.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,8 @@ public class CustomerController {
 
     @Autowired
     CustomerService customerService;
+    @Autowired
+    AdminService adminService;
 
 
     @PostMapping("/register") //tested, works
@@ -27,15 +30,15 @@ public class CustomerController {
         return ("Customer information successfully updated!");
     }
 
-    @PutMapping("/reserve_field/{madeBy}/{fieldId}") //partially works problem with extracting id
+    @PutMapping("/reserve_field/{madeBy}/{fieldId}") //works
     public String reserveField(@PathVariable String madeBy, @PathVariable int fieldId, @RequestBody String duration){
         return customerService.reserveField(madeBy, fieldId, duration);
 
     }
 
-    @DeleteMapping("/cancel_reservation/{reservationId}/{fieldId}") //not tested
+    @DeleteMapping("/cancel_reservation/{reservationId}/{fieldId}") //works
     public String cancelReservation(@PathVariable long reservationId,@PathVariable int fieldId){
-        return customerService.cancelReservation(reservationId, fieldId);
+        return adminService.cancelReservation(reservationId, fieldId);
 
     }
 

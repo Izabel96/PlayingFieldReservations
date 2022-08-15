@@ -53,4 +53,9 @@ public class AdminController {
         adminService.removeCustomer(id);
         return "Customer successfully removed.";
     }
+
+    @DeleteMapping("/delete_reservation/{reservationId}/{fieldId}") //works
+    public String deleteReservation (@PathVariable long reservationId, @PathVariable int fieldId){
+        return adminService.cancelReservation(reservationId, fieldId);
+    }
 }

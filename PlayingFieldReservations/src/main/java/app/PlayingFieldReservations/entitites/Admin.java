@@ -13,7 +13,7 @@ public class Admin extends User {
 		super();
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
