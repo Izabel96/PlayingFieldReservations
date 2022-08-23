@@ -1,18 +1,28 @@
 package app.PlayingFieldReservations.controllers;
 
+import app.PlayingFieldReservations.entitites.Admin;
 import app.PlayingFieldReservations.entitites.Company;
 import app.PlayingFieldReservations.entitites.Customer;
 import app.PlayingFieldReservations.entitites.Reservation;
 import app.PlayingFieldReservations.services.AdminService;
+import org.keycloak.KeycloakSecurityContext;
+import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import javax.servlet.ServletRequest;
 
+import javax.servlet.ServletResponse;
 import javax.transaction.Transactional;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class AdminController {
     @Autowired
     AdminService adminService;
+    //@Autowired
+    //private KeycloakRestTemplate keycloakRestTemplate;
 
     @PostMapping("/add_company") //works
     public String addCompany(@RequestBody Company company){ //TODO:login as admin to do this
@@ -23,7 +33,6 @@ public class AdminController {
 
     @GetMapping("/view_all_companies")// works
     public Iterable<Company> viewAllCompanies(){
-
         return adminService.viewAllCompanies();
     }
 
@@ -57,5 +66,22 @@ public class AdminController {
     @DeleteMapping("/delete_reservation/{reservationId}/{fieldId}") //works
     public String deleteReservation (@PathVariable long reservationId, @PathVariable int fieldId){
         return adminService.cancelReservation(reservationId, fieldId);
+    }
+
+    @GetMapping("/get_all_admins")
+    public Iterable<Admin> viewAllAdmins(){
+        if(adminService.getAllAdmins() == null){
+            throw new NullPointerException(String.format("There is no admin!"));
+            }
+        else{
+            return adminService.getAllAdmins();
+        }
+
+    }
+
+    @PostMapping("/register_admin") //tested, works
+    public String addNewAdmin(@RequestBody Admin admin){
+        adminService.addAdmin(admin);
+        return "Admin successfully added!";
     }
 }

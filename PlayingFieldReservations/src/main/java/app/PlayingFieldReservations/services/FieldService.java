@@ -2,6 +2,7 @@ package app.PlayingFieldReservations.services;
 
 import app.PlayingFieldReservations.entitites.Reservation;
 import app.PlayingFieldReservations.repositories.ReservationRepository;
+import org.apache.logging.log4j.LogManager;
 import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.hibernate.mapping.Map;
 import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
 
 import javax.transaction.Transactional;
+
 
 @Service
 public class FieldService {
