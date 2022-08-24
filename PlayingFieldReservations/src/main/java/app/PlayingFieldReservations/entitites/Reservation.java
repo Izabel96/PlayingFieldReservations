@@ -9,7 +9,7 @@ public class Reservation {
 
     @Id
     @GeneratedValue
-    private long id;
+    private long reservationId;
     private String madeBy; //username of customer
     private String fieldName;
     private String reservationDuration;
@@ -19,11 +19,11 @@ public class Reservation {
     }
 
     public long getId() {
-        return id;
+        return reservationId;
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.reservationId = reservationId;
     }
 
     public String getMadeBy() {

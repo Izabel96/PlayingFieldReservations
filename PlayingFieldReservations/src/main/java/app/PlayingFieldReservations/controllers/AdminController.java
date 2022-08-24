@@ -5,8 +5,6 @@ import app.PlayingFieldReservations.entitites.Company;
 import app.PlayingFieldReservations.entitites.Customer;
 import app.PlayingFieldReservations.entitites.Reservation;
 import app.PlayingFieldReservations.services.AdminService;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +19,6 @@ import java.util.Optional;
 public class AdminController {
     @Autowired
     AdminService adminService;
-    //@Autowired
-    //private KeycloakRestTemplate keycloakRestTemplate;
 
     @PostMapping("/add_company") //works
     public String addCompany(@RequestBody Company company){ //TODO:login as admin to do this

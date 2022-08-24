@@ -7,30 +7,39 @@ import app.PlayingFieldReservations.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
 public class CustomerService extends UserService {
 
-
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "Customer_Reservations",
+            joinColumns = { @JoinColumn(name = "id") },
+            inverseJoinColumns = { @JoinColumn(name = "grade") }
+    )
 
     @Autowired
     CustomerRepository customerRepository;
 
     @Override
-    public String reserveField(String madeBy, int id, String duration) { // works//TODO: login
+    public String reserveField(String madeBy, int id, String duration) { // works
 
         return super.reserveField(madeBy, id, duration);
     }
 
     @Override
-    public String cancelReservation(long reservationId, int fieldId) { //works //TODO: login
+    public String cancelReservation(long reservationId, int fieldId) { //works
 
         return super.cancelReservation(reservationId, fieldId);
     }
 
-    public void addRegisteredCustomer(Customer customer){ //TODO: take customer from keycloak and add to MySQL!!
+    public void addRegisteredCustomer(Customer customer){
 
             customerRepository.save(customer);
 
