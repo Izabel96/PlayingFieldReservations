@@ -5,6 +5,7 @@ import app.PlayingFieldReservations.entitites.Field;
 import app.PlayingFieldReservations.entitites.Reservation;
 import app.PlayingFieldReservations.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.CascadeType;
@@ -16,12 +17,14 @@ import java.util.Collection;
 
 @Service
 public class CustomerService extends UserService {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
             name = "Customer_Reservations",
             joinColumns = { @JoinColumn(name = "id") },
-            inverseJoinColumns = { @JoinColumn(name = "grade") }
+            inverseJoinColumns = { @JoinColumn(name = "reservationId") }
     )
 
     @Autowired
@@ -40,7 +43,7 @@ public class CustomerService extends UserService {
     }
 
     public void addRegisteredCustomer(Customer customer){
-
+            customer.setPassword(passwordEncoder.encode(customer.getPassword()));
             customerRepository.save(customer);
 
     }

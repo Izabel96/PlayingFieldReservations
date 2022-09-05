@@ -9,6 +9,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,8 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-
-import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
+import javax.servlet.http.HttpServletResponse;
 
 
 import app.PlayingFieldReservations.entitites.Field;
@@ -27,13 +27,19 @@ import java.util.Map;
 
 @RestController
 public class MainController {
-	//@Autowired
-    //private KeycloakRestTemplate keycloakRestTemplate;
     @Autowired
     private AuthenticationManager authenticationManager;
 
 	@Autowired
 	FieldService fieldService;
+
+    @GetMapping("/home")
+    public String homePage(){
+        String welcome = "Добре дошли в приложението за резервации на спортни игрища!\n\n";
+        String body =
+                "<HTML><body> <a href=\"http://localhost:8080/login_admin\">Вход</a></body></HTML>";
+        return (welcome + body);
+    }
 
     @GetMapping("/view_all_fields") //tested works
     public Iterable<Field> getAllFieldsController(){
@@ -43,7 +49,7 @@ public class MainController {
 
     @GetMapping("/login_or_register_customers")
     public String loginRegister(){
-        return "You have successfully logged in!";
+        return "Успешно влязохте в профила си!";
        //redirects to keycloak for login/register form
     }
 
@@ -55,7 +61,7 @@ public class MainController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(admin.getEmail(), admin.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authObject);
         } catch (BadCredentialsException e) {
-            throw new Exception("Invalid credentials");
+            throw new Exception("Невалидни данни!");
         }
 
         return new ResponseEntity<HttpStatus>(HttpStatus.OK);
@@ -63,9 +69,13 @@ public class MainController {
 	
 	
 	@GetMapping(path = "/logout") //tested, works
-    public String logout(HttpServletRequest request) throws ServletException {
-        request.logout();
-        return "You have successfully logged out!";
+    public String logout(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        //request.logout();
+        return "Успешно излязохте от профила си!";
     }
 
 	

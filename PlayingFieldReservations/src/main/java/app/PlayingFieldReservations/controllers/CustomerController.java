@@ -21,14 +21,14 @@ public class CustomerController {
     @PostMapping("/register") //tested, works
     public String addNewCustomer(@RequestBody Customer customer){
         customerService.addRegisteredCustomer(customer);
-        return "Customer successfully registered!";
+        return "Потребителят беше успешно регистриран!";
     }
 
     @PutMapping("/change_customer_Information/{phone}") //works add check to see if such customer exists
     public String changePersonalInformation(@RequestBody Customer newCustomerData,@PathVariable int phone){
         customerService.changePersonalInformation(newCustomerData, phone);
 
-        return ("Customer information successfully updated!");
+        return ("Информацията беше успешно обновена!");
     }
 
     @PutMapping("/reserve_field/{madeBy}/{fieldId}") //works

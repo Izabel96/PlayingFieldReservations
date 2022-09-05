@@ -24,7 +24,7 @@ public class AdminController {
     public String addCompany(@RequestBody Company company){ //TODO:login as admin to do this
         adminService.addCompany(company);
 
-        return "Company successfully added!";
+        return "Успешно добавена компания!";
     }
 
     @GetMapping("/view_all_companies")// works
@@ -49,14 +49,14 @@ public class AdminController {
     public String deleteCompany(@PathVariable int companyId){ //TODO:login as admin to do this
         adminService.removeCompany(companyId);
 
-        return ("Company removed.");
+        return ("Компанията беше изтрита.");
     }
 
     @Transactional
     @DeleteMapping("/delete_customer/{id}") // works
     public String deleteCustomer(@PathVariable int id){
         adminService.removeCustomer(id);
-        return "Customer successfully removed.";
+        return "Клиентът беше успешно изтрит.";
     }
 
     @DeleteMapping("/delete_reservation/{reservationId}/{fieldId}") //works
@@ -67,7 +67,7 @@ public class AdminController {
     @GetMapping("/get_all_admins")
     public Iterable<Admin> viewAllAdmins(){
         if(adminService.getAllAdmins() == null){
-            throw new NullPointerException(String.format("There is no admin!"));
+            throw new NullPointerException(String.format("Не съществува админ!!"));
             }
         else{
             return adminService.getAllAdmins();

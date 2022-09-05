@@ -23,7 +23,7 @@ public class CompanyController {
     public String changePersonalInformation(@RequestBody Company newCompanyData, @PathVariable int phone){
         companyService.changeCompanyInformation(newCompanyData, phone);
 
-        return ("Company information successfully updated!");
+        return ("Информацията беше успешно обновена!");
     }
 
     @PostMapping("/add_new_field") //works TODO: log in to add field
@@ -36,7 +36,7 @@ public class CompanyController {
     public String removeField(@PathVariable int fieldId){
         fieldService.deleteField(fieldId);
 
-        return String.format("Field with id %d successfully deleted!", fieldId);
+        return String.format("Игрище с идентификационен номер %d е изтрито!", fieldId);
     }
 
 

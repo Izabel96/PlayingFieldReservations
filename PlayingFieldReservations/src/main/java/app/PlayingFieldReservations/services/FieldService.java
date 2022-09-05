@@ -11,7 +11,6 @@ import app.PlayingFieldReservations.entitites.Field;
 import app.PlayingFieldReservations.repositories.FieldRepository;
 import org.springframework.http.ResponseEntity;
 import org.hibernate.mapping.Map;
-import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
 
 import javax.transaction.Transactional;
 
@@ -27,7 +26,7 @@ public class FieldService {
 	
 	public void addNewField(Field field) {
 		if(fieldRepository.findAll().contains(field)){
-			System.out.println("This field already exists!");
+			System.out.println("Това игрище вече съществува!!");
 		}else {
 			fieldRepository.save(field);
 		}
@@ -36,7 +35,7 @@ public class FieldService {
 	@Transactional
 	public void deleteField(int fieldId) {
 		if(fieldRepository.findByFieldId(fieldId) == null){
-			System.out.println("There is no field with this id.");
+			System.out.println("Не съшществува игрище с такова id.");
 		}else {
 			fieldRepository.deleteById(fieldId);
 		}
@@ -44,7 +43,7 @@ public class FieldService {
 	
 	public Iterable<Field> getAllFields(){
 		if(fieldRepository.findAll() == null){
-			System.out.println("There are no available fields.");
+			System.out.println("Няма добавени игрища.");
 			return null;
 		}
 		return fieldRepository.findAll();
@@ -53,7 +52,7 @@ public class FieldService {
 	
 	public Field getFieldById(int fieldId){
 		if(fieldRepository.findByFieldId(fieldId) == null){
-			System.out.println("There is no customer with this id.");
+			System.out.println("Не съществува потребител с такова id.");
 			return null;
 		}
 		return fieldRepository.findByFieldId(fieldId);
@@ -70,7 +69,7 @@ public class FieldService {
 		Reservation reservation = new Reservation();
 
 		if(fieldToReserve.getState().contains(duration)){
-			return "The field is already reserved for this period. Please choose another one.";
+			return "Игрището вече е резервирано за този период. Моля изберете друг.";
 		}else {
 			reservation.setFieldName(fieldToReserve.getFieldName());
 			reservation.setMadeBy(madeBy);
@@ -78,10 +77,10 @@ public class FieldService {
 			reservationRepository.save(reservation);
 			long reservationId = reservationRepository.findByFieldNameAndReservationDuration(fieldToReserve.getFieldName(), duration).getId();
 
-			String newState = String.format("Reserved for " + duration);
+			String newState = String.format("Резервирано за " + duration);
 			changeFieldState(fieldId, newState);
 
-			return String.format("Field %s reserved by %s for duration %s. Your reservation id is %d.",
+			return String.format("Игрището %s е резервирано от %s за периода %s. Вашият номер на резервацията е %d.",
 					fieldToReserve.getFieldName(), madeBy, duration,reservationId);
 		}
 

@@ -11,8 +11,8 @@ import app.PlayingFieldReservations.repositories.CustomerRepository;
 import app.PlayingFieldReservations.repositories.ReservationRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.keycloak.KeycloakSecurityContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletRequest;
@@ -24,6 +24,8 @@ import java.util.UUID;
 @Service
 public class AdminService extends UserService {
     private static final Logger console = LogManager.getLogger(AdminService.class);
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     AdminRepository adminRepository;
     @Autowired
@@ -55,6 +57,7 @@ public class AdminService extends UserService {
     }
 
     public void addCompany(Company company){ //add check if it already exists
+        company.setPassword(passwordEncoder.encode(company.getPassword()));
         companyRepository.save(company);
     }
 
@@ -75,8 +78,8 @@ public class AdminService extends UserService {
         return super.cancelReservation(reservationId, fieldId);
     }
 
-    public void addAdmin(Admin admin){ //TODO: take customer from keycloak and add to MySQL!!
-
+    public void addAdmin(Admin admin){
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         adminRepository.save(admin);
 
     }

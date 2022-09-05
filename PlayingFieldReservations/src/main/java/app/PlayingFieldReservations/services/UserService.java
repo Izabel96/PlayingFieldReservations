@@ -2,7 +2,7 @@ package app.PlayingFieldReservations.services;
 
 import app.PlayingFieldReservations.entitites.Reservation;
 import app.PlayingFieldReservations.repositories.ReservationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;;
 import org.springframework.stereotype.Service;
 
 import app.PlayingFieldReservations.entitites.Field;
@@ -24,9 +24,9 @@ public class UserService {
 	public String cancelReservation(long reservationId, int fieldId) {
 		Reservation toCancel =  reservationRepository.findById(reservationId);
 
-		fieldService.changeFieldState(fieldId, "Available");
+		fieldService.changeFieldState(fieldId, "Свободно");
 		reservationRepository.delete(toCancel);
-		return "Reservation successfully canceled!";
+		return "Резервацията е успешно отменена!";
 		
 	}
 }

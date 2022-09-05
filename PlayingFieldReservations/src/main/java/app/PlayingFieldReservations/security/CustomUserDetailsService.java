@@ -5,9 +5,11 @@ import app.PlayingFieldReservations.repositories.AdminRepository;
 import app.PlayingFieldReservations.repositories.CompanyRepository;
 import app.PlayingFieldReservations.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         Admin existingAdmin = adminRepository.findByEmail(email);
         if(existingAdmin == null){
-            new UsernameNotFoundException("User not found");
+            new UsernameNotFoundException("Не съшествува потребител с този имейл!");
         }
         return new org.springframework.security.core.userdetails.User(
                 existingAdmin.getEmail(), existingAdmin.getPassword(), new ArrayList<>());
