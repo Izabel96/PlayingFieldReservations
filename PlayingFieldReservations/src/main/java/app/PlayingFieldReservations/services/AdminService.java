@@ -12,6 +12,7 @@ import app.PlayingFieldReservations.repositories.ReservationRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,19 +36,31 @@ public class AdminService extends UserService {
     @Autowired
     ReservationRepository reservationRepository;
 
-    public Iterable<Company> viewAllCompanies() { //works TODO: add check if empty, see softuni projects
-                if (companyRepository.findAll() == null) { // TODO:implement
+    public Iterable<Company> viewAllCompanies() { //works
+                if (!companyRepository.findAll().isEmpty()) {
+                    return companyRepository.findAll();
+
+                }else{
+                    throw  new NullPointerException("Няма регистрирани компании.");
                 }
-                return companyRepository.findAll();
             }
 
     public Iterable<Admin> getAllAdmins(){
-        return adminRepository.findAll();
+        if (!adminRepository.findAll().isEmpty()) {
+            return adminRepository.findAll();
 
+        }else{
+            throw  new NullPointerException("Няма регистрирани админи.");
+        }
     }
 
     public Iterable<Customer> viewAllCustomers(){ //works TODO: add check if empty, see softuni projects
-        return customerRepository.findAll();
+        if (!customerRepository.findAll().isEmpty()) {
+            return customerRepository.findAll();
+
+        }else{
+            throw  new NullPointerException("Няма регистрирани потребители.");
+        }
 
     }
 
@@ -61,16 +74,24 @@ public class AdminService extends UserService {
         companyRepository.save(company);
     }
 
-    public void removeCompany(int companyId){
-
-        companyRepository.deleteByCompanyId(companyId);
-
+    public void removeCompany(long companyId){
+        Company checkIfExists = companyRepository.findById(companyId);
+        if(checkIfExists != null){
+            companyRepository.deleteById(companyId);
+        }else{
+            throw new IllegalArgumentException("Не съществува потребител с такова id!");
+        }
     }
 
     public void removeCustomer(long customerId){
-
-        customerRepository.deleteByCustomerId(customerId);
+        Customer checkIfExists = customerRepository.findById(customerId);
+        if(checkIfExists != null){
+            customerRepository.deleteById(customerId);
+        }else{
+            throw new IllegalArgumentException("Не съществува потребител с такова id!");
+        }
     }
+
 
     @Override
     public String cancelReservation(long reservationId, int fieldId){

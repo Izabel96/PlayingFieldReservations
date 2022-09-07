@@ -20,12 +20,12 @@ public class CustomerService extends UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    /*@ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
             name = "Customer_Reservations",
             joinColumns = { @JoinColumn(name = "id") },
             inverseJoinColumns = { @JoinColumn(name = "reservationId") }
-    )
+    )*/
 
     @Autowired
     CustomerRepository customerRepository;

@@ -10,5 +10,6 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
     Company findCompanyByCompanyPhoneNumber(int companyPhoneNumber);
 
     Company findByEmail(String email);
-    void deleteByCompanyId(int companyId);
+    Company findById(long id);
+    void deleteById(long id);
 }

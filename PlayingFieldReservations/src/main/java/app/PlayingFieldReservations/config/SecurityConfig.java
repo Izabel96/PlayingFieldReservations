@@ -53,14 +53,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.authenticationProvider(authenticationProvider());
 
-        http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers( "/register_admin", "/view_all_fields", "/home").permitAll()
-                .anyRequest().authenticated()
+        http.authorizeRequests().antMatchers("/home", "/view_all_companies", "/admin/login**",
+                "/delete_company/{companyId}", "view_all_customers", "remove_customer",
+                "add_company", "register").permitAll();
+
+        http.antMatcher("/admin_home")
+                .authorizeRequests().anyRequest().authenticated()
                 .and()
-                .httpBasic();
+                .formLogin()
+                    .loginPage("/admin/login")
+                        .usernameParameter("email")
+                        .loginProcessingUrl("/admin/login")
+                        .defaultSuccessUrl("/admin/home")
+                        .failureUrl("/login.html?error=true")
+                        .permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/home");
     }
 }
 //@Configuration

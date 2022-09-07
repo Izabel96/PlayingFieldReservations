@@ -9,6 +9,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     Customer findCustomerByPhoneNumber(int phoneNumber);
     Customer findByEmail(String email);
-    void deleteByCustomerId(long customerId);
+    Customer findById(long id);
+    void deleteById(long id);
 
 }

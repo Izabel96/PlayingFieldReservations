@@ -1,18 +1,11 @@
 package app.PlayingFieldReservations.controllers;
 
-import app.PlayingFieldReservations.entitites.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletException;
@@ -22,8 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import app.PlayingFieldReservations.entitites.Field;
 import app.PlayingFieldReservations.services.FieldService;
-
-import java.util.Map;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class MainController {
@@ -37,7 +29,7 @@ public class MainController {
     public String homePage(){
         String welcome = "Добре дошли в приложението за резервации на спортни игрища!\n\n";
         String body =
-                "<HTML><body> <a href=\"http://localhost:8080/login_admin\">Вход</a></body></HTML>";
+                "<HTML><body> <a href=\"http://localhost:8080/admin_login\">Вход</a></body></HTML>";
         return (welcome + body);
     }
 
@@ -53,7 +45,7 @@ public class MainController {
        //redirects to keycloak for login/register form
     }
 
-    @PostMapping("login_admin")
+    /*@PostMapping("login_admin")
     public ResponseEntity<HttpStatus> login(@RequestBody Admin admin) throws Exception {
 
         Authentication authObject = null;
@@ -65,6 +57,14 @@ public class MainController {
         }
 
         return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+    }*/
+
+    @GetMapping("/admin/login")
+    public ModelAndView viewAdminLoginPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin_login_old");
+        return modelAndView;
+        //return "admin_login";
     }
 	
 	

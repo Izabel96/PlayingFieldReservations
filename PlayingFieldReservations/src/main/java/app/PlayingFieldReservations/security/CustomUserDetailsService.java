@@ -30,7 +30,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         if(existingAdmin == null){
             new UsernameNotFoundException("Не съшествува потребител с този имейл!");
         }
-        return new org.springframework.security.core.userdetails.User(
-                existingAdmin.getEmail(), existingAdmin.getPassword(), new ArrayList<>());
+        //return new org.springframework.security.core.userdetails.User(
+                //existingAdmin.getEmail(), existingAdmin.getPassword(), new ArrayList<>());
+        return new CustomUserDetails(existingAdmin);
     }
 }
