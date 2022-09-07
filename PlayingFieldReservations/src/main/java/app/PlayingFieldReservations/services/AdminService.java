@@ -64,8 +64,13 @@ public class AdminService extends UserService {
 
     }
 
-    public Iterable<Reservation> viewAllReservations(){ //works TODO: add check if empty, see softuni projects
-        return reservationRepository.findAll();
+    public Iterable<Reservation> viewAllReservations(){ //works
+        if (!reservationRepository.findAll().isEmpty()) {
+            return reservationRepository.findAll();
+
+        }else{
+            throw  new NullPointerException("Няма направени резервации.");
+        }
 
     }
 

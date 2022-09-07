@@ -1,11 +1,14 @@
 package app.PlayingFieldReservations.controllers;
 
+import app.PlayingFieldReservations.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletException;
@@ -19,8 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class MainController {
-    @Autowired
-    private AuthenticationManager authenticationManager;
+   // @Autowired
+   // private AuthenticationManager authenticationManager;
 
 	@Autowired
 	FieldService fieldService;
@@ -62,9 +65,20 @@ public class MainController {
     @GetMapping("/admin/login")
     public ModelAndView viewAdminLoginPage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("admin_login_old");
+        modelAndView.setViewName("admin_login");
         return modelAndView;
         //return "admin_login";
+    }
+
+    @PostMapping("/admin/login")
+    public void testLogin(HttpServletRequest request, HttpServletResponse response){
+        //CustomUserDetailsService customTestService = new CustomUserDetailsService();
+
+        //System.out.println(spring);
+
+        //customTestService.loadUserByUsername(response.get)
+        System.out.println("    testttttttttttttttttttttttttt");
+
     }
 	
 	

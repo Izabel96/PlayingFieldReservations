@@ -17,21 +17,18 @@ import java.util.ArrayList;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    AdminRepository adminRepository;
-    @Autowired
-    CompanyRepository companyRepository;
-    @Autowired
-    CustomerRepository customerRepository;
+    private AdminRepository adminRepository;
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
-        Admin existingAdmin = adminRepository.findByEmail(email);
-        if(existingAdmin == null){
-            new UsernameNotFoundException("Не съшествува потребител с този имейл!");
+        Admin admin = adminRepository.findByEmail(email);
+        System.out.println(admin.getUsername());
+        if(admin == null){
+            throw new UsernameNotFoundException("Не съшествува потребител с този имейл!");
         }
         //return new org.springframework.security.core.userdetails.User(
                 //existingAdmin.getEmail(), existingAdmin.getPassword(), new ArrayList<>());
-        return new CustomUserDetails(existingAdmin);
+        return new CustomUserDetails(admin);
     }
 }
