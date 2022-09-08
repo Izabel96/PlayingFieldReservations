@@ -23,14 +23,13 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @PostMapping("/add_company") //works
+    @PostMapping("/admin/add_company") //works
     public String addCompany(@RequestBody Company company){ //TODO:login as admin to do this
         adminService.addCompany(company);
-
         return "Успешно добавена компания!";
     }
 
-    @GetMapping("/view_all_companies")// works
+    @GetMapping("/admin/view_all_companies")// works
     public ResponseEntity viewAllCompanies() throws Exception{
         try {
             Iterable<Company> allCompanies = adminService.viewAllCompanies();
@@ -50,7 +49,7 @@ public class AdminController {
         }*/
     }
 
-    @GetMapping("/view_all_reservations")// works
+    @GetMapping("/admin/view_all_reservations")// works
     public Iterable<Reservation> viewAllReservations(){
         if(adminService.viewAllReservations() == null){
             throw new NullPointerException(String.format("Няма направени регистрации!"));
@@ -60,7 +59,7 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/view_all_customers") //works
+    @GetMapping("/admin/view_all_customers") //works
     public Iterable<Customer> viewAllCustomers(){
         if(adminService.viewAllCustomers() == null){
             throw new NullPointerException(String.format("Няма регистрирани потребители!"));
@@ -79,7 +78,7 @@ public class AdminController {
     }
 
     @Transactional
-    @DeleteMapping("/delete_company/{companyId}") //works
+    @DeleteMapping("/admin/delete_company/{companyId}") //works
     public ResponseEntity deleteCompany(@PathVariable long companyId) throws Exception { //TODO:login as admin to do this
         try {
             adminService.removeCompany(companyId);
@@ -94,7 +93,7 @@ public class AdminController {
     }
 
     @Transactional
-    @DeleteMapping("/delete_customer/{id}") // works
+    @DeleteMapping("/admin/delete_customer/{id}") // works
     public ResponseEntity deleteCustomer(@PathVariable long id) throws Exception{
         try {
             adminService.removeCustomer(id);
@@ -108,12 +107,12 @@ public class AdminController {
         }
     }
 
-    @DeleteMapping("/delete_reservation/{reservationId}/{fieldId}") //works
+    @DeleteMapping("/admin/delete_reservation/{reservationId}/{fieldId}") //works
     public String deleteReservation (@PathVariable long reservationId, @PathVariable int fieldId){
         return adminService.cancelReservation(reservationId, fieldId);
     }
 
-    @GetMapping("/get_all_admins")
+    @GetMapping("/admin/get_all_admins")
     public Iterable<Admin> viewAllAdmins(){
         if(adminService.getAllAdmins() == null){
             throw new NullPointerException(String.format("Няма регистриран админ!!"));
@@ -124,7 +123,7 @@ public class AdminController {
 
     }
 
-    @PostMapping("/register_admin") //tested, works
+    @PostMapping("/admin/register_admin") //tested, works
     public String addNewAdmin(@RequestBody Admin admin){
         adminService.addAdmin(admin);
         return "Admin successfully added!";
