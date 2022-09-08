@@ -2,7 +2,6 @@ package app.PlayingFieldReservations.entitites;
 
 import javax.persistence.*;
 
-
 @MappedSuperclass
 public abstract class User {
 	
@@ -36,6 +35,4 @@ public abstract class User {
 	public void setId(){
 		this.id = id;
 	}
-	
-	
 }

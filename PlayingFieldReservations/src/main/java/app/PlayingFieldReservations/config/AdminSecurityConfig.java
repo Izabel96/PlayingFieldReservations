@@ -20,32 +20,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    //@Autowired
-    //private CustomUserDetailsService userDetailsService;
 
     @Bean
     public UserDetailsService userDetailsService() {
         return new CustomAdminDetailsService();
     }
 
-
-
-    /*@Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
-        auth.authenticationProvider(authenticationProvider());
-    }*/
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    /*@Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }*/
     @Bean
 
     public DaoAuthenticationProvider authenticationProvider1() {
@@ -72,23 +57,6 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().permitAll();
     }
-
-
-            /*http.antMatcher("/admin_home")
-                    .authorizeRequests().anyRequest().authenticated()
-                .and()
-                .formLogin()
-                    .loginPage("/admin/login")
-                        .usernameParameter("email")
-                        .loginProcessingUrl("/admin/login")
-                        .defaultSuccessUrl("/admin/home")
-                        .failureUrl("/login.html?error=true")
-                        .permitAll()
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/home");
-}*/
 }
 
 

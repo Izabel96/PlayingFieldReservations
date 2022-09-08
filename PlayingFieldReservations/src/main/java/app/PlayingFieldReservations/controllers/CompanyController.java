@@ -1,7 +1,6 @@
 package app.PlayingFieldReservations.controllers;
 
 import app.PlayingFieldReservations.entitites.Company;
-import app.PlayingFieldReservations.entitites.Customer;
 import app.PlayingFieldReservations.entitites.Field;
 import app.PlayingFieldReservations.services.CompanyService;
 import app.PlayingFieldReservations.services.FieldService;
@@ -12,7 +11,6 @@ import javax.transaction.Transactional;
 
 @RestController
 public class CompanyController {
-
     @Autowired
     CompanyService companyService;
     @Autowired
@@ -38,8 +36,4 @@ public class CompanyController {
 
         return String.format("Игрище с идентификационен номер %d е изтрито!", fieldId);
     }
-
-
-
-
 }

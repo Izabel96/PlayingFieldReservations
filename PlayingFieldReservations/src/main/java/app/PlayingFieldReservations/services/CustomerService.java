@@ -1,7 +1,6 @@
 package app.PlayingFieldReservations.services;
 
 import app.PlayingFieldReservations.entitites.Customer;
-import app.PlayingFieldReservations.entitites.Field;
 import app.PlayingFieldReservations.entitites.Reservation;
 import app.PlayingFieldReservations.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +28,11 @@ public class CustomerService extends UserService {
 
     @Autowired
     CustomerRepository customerRepository;
-
     @Override
     public String reserveField(String madeBy, int id, String duration) { // works
 
         return super.reserveField(madeBy, id, duration);
     }
-
     @Override
     public String cancelReservation(long reservationId, int fieldId) { //works
 
@@ -45,7 +42,6 @@ public class CustomerService extends UserService {
     public void addRegisteredCustomer(Customer customer){
             customer.setPassword(passwordEncoder.encode(customer.getPassword()));
             customerRepository.save(customer);
-
     }
 
     public void changePersonalInformation(Customer newCustomerData, int phone){ //TODO: connection with keycloak
@@ -57,12 +53,9 @@ public class CustomerService extends UserService {
         customerToEdit.setPhoneNumber(newCustomerData.getPhoneNumber());
 
         customerRepository.save(customerToEdit);
-
     }
 
     public Iterable<Reservation> getReservationHistory(String madeBy){
         return reservationRepository.findAllByMadeBy(madeBy);
     }
-
-
 }

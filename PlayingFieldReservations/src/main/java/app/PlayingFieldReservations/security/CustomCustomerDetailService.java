@@ -1,6 +1,5 @@
 package app.PlayingFieldReservations.security;
 
-import app.PlayingFieldReservations.entitites.Admin;
 import app.PlayingFieldReservations.entitites.Customer;
 import app.PlayingFieldReservations.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 @Service
 public class CustomCustomerDetailService implements UserDetailsService {
-
     @Autowired
     private CustomerRepository customerRepository;
-
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -26,6 +23,5 @@ public class CustomCustomerDetailService implements UserDetailsService {
         }
         return new org.springframework.security.core.userdetails.User(
                 customer.getEmail(), customer.getPassword(), new ArrayList<>());
-        //return new CustomUserDetails(admin);
     }
 }

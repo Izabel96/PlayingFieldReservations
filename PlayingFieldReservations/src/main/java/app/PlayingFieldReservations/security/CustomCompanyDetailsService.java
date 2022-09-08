@@ -1,9 +1,7 @@
 package app.PlayingFieldReservations.security;
 
 import app.PlayingFieldReservations.entitites.Company;
-import app.PlayingFieldReservations.entitites.Customer;
 import app.PlayingFieldReservations.repositories.CompanyRepository;
-import app.PlayingFieldReservations.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,6 +25,5 @@ public class CustomCompanyDetailsService implements UserDetailsService {
         }
         return new org.springframework.security.core.userdetails.User(
                 company.getEmail(), company.getPassword(), new ArrayList<>());
-        //return new CustomUserDetails(admin);
     }
 }

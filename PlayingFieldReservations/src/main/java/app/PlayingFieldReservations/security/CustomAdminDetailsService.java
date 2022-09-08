@@ -26,6 +26,5 @@ public class CustomAdminDetailsService implements UserDetailsService {
         }
         return new org.springframework.security.core.userdetails.User(
                 admin.getEmail(), admin.getPassword(), new ArrayList<>());
-        //return new CustomUserDetails(admin);
     }
 }

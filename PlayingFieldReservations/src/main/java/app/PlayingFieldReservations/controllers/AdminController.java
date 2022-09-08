@@ -10,13 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.ServletRequest;
-
-import javax.servlet.ServletResponse;
 import javax.transaction.Transactional;
-import java.util.Map;
-import java.util.Optional;
 
 @RestController
 public class AdminController {
@@ -41,12 +35,6 @@ public class AdminController {
                     .status(HttpStatus.FORBIDDEN)
                     .body("Няма регистирани компании!");
         }
-        /*if(adminService.viewAllCompanies() == null){
-            throw new NullPointerException(String.format("Няма регистрирани компании!"));
-        }
-        else{
-            return adminService.viewAllCompanies();
-        }*/
     }
 
     @GetMapping("/admin/view_all_reservations")// works
@@ -120,7 +108,6 @@ public class AdminController {
         else{
             return adminService.getAllAdmins();
         }
-
     }
 
     @PostMapping("/admin/register_admin") //tested, works

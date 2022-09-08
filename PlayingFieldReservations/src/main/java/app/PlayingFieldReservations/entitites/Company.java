@@ -1,8 +1,6 @@
 package app.PlayingFieldReservations.entitites;
 
 import javax.persistence.Entity;
-
-
 @Entity
 public class Company extends User {
 

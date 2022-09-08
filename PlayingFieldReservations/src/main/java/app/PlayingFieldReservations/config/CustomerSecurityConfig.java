@@ -1,6 +1,5 @@
 package app.PlayingFieldReservations.config;
 
-import app.PlayingFieldReservations.security.CustomAdminDetailsService;
 import app.PlayingFieldReservations.security.CustomCustomerDetailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

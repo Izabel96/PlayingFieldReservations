@@ -12,15 +12,8 @@ import app.PlayingFieldReservations.repositories.ReservationRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class AdminService extends UserService {
@@ -39,7 +32,6 @@ public class AdminService extends UserService {
     public Iterable<Company> viewAllCompanies() { //works
                 if (!companyRepository.findAll().isEmpty()) {
                     return companyRepository.findAll();
-
                 }else{
                     throw  new NullPointerException("Няма регистрирани компании.");
                 }
@@ -48,7 +40,6 @@ public class AdminService extends UserService {
     public Iterable<Admin> getAllAdmins(){
         if (!adminRepository.findAll().isEmpty()) {
             return adminRepository.findAll();
-
         }else{
             throw  new NullPointerException("Няма регистрирани админи.");
         }
@@ -57,21 +48,17 @@ public class AdminService extends UserService {
     public Iterable<Customer> viewAllCustomers(){ //works TODO: add check if empty, see softuni projects
         if (!customerRepository.findAll().isEmpty()) {
             return customerRepository.findAll();
-
         }else{
             throw  new NullPointerException("Няма регистрирани потребители.");
         }
-
     }
 
     public Iterable<Reservation> viewAllReservations(){ //works
         if (!reservationRepository.findAll().isEmpty()) {
             return reservationRepository.findAll();
-
         }else{
             throw  new NullPointerException("Няма направени резервации.");
         }
-
     }
 
     public void addCompany(Company company){ //add check if it already exists
@@ -107,6 +94,5 @@ public class AdminService extends UserService {
     public void addAdmin(Admin admin){
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         adminRepository.save(admin);
-
     }
 }

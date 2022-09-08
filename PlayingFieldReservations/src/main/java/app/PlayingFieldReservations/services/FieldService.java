@@ -2,28 +2,21 @@ package app.PlayingFieldReservations.services;
 
 import app.PlayingFieldReservations.entitites.Reservation;
 import app.PlayingFieldReservations.repositories.ReservationRepository;
-import org.apache.logging.log4j.LogManager;
-import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.PlayingFieldReservations.entitites.Field;
 import app.PlayingFieldReservations.repositories.FieldRepository;
-import org.springframework.http.ResponseEntity;
-import org.hibernate.mapping.Map;
 
 import javax.transaction.Transactional;
 
 
 @Service
 public class FieldService {
-	
 	@Autowired
 	FieldRepository fieldRepository;
 	@Autowired
 	ReservationRepository reservationRepository;
-
-	
 	public void addNewField(Field field) {
 		if(fieldRepository.findAll().contains(field)){
 			System.out.println("Това игрище вече съществува!!");
@@ -31,7 +24,6 @@ public class FieldService {
 			fieldRepository.save(field);
 		}
 	}
-
 	@Transactional
 	public void deleteField(int fieldId) {
 		if(fieldRepository.findByFieldId(fieldId) == null){
@@ -47,7 +39,6 @@ public class FieldService {
 			return null;
 		}
 		return fieldRepository.findAll();
-
 	}
 	
 	public Field getFieldById(int fieldId){
@@ -83,7 +74,5 @@ public class FieldService {
 			return String.format("Игрището %s е резервирано от %s за периода %s. Вашият номер на резервацията е %d.",
 					fieldToReserve.getFieldName(), madeBy, duration,reservationId);
 		}
-
-
 	}
 }

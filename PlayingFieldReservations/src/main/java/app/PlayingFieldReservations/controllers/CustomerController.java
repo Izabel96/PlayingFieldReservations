@@ -2,7 +2,6 @@ package app.PlayingFieldReservations.controllers;
 
 
 import app.PlayingFieldReservations.entitites.Customer;
-import app.PlayingFieldReservations.entitites.Field;
 import app.PlayingFieldReservations.entitites.Reservation;
 import app.PlayingFieldReservations.services.AdminService;
 import app.PlayingFieldReservations.services.CustomerService;
@@ -11,12 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CustomerController {
-
     @Autowired
     CustomerService customerService;
     @Autowired
     AdminService adminService;
-
 
     @PostMapping("/customer/register") //tested, works
     public String addNewCustomer(@RequestBody Customer customer){
@@ -34,20 +31,15 @@ public class CustomerController {
     @PutMapping("/customer/reserve_field/{madeBy}/{fieldId}") //works
     public String reserveField(@PathVariable String madeBy, @PathVariable int fieldId, @RequestBody String duration){
         return customerService.reserveField(madeBy, fieldId, duration);
-
     }
 
     @DeleteMapping("/customer/cancel_reservation/{reservationId}/{fieldId}") //works
     public String cancelReservation(@PathVariable long reservationId,@PathVariable int fieldId){
         return adminService.cancelReservation(reservationId, fieldId);
-
     }
 
     @GetMapping("/customer/get_reservations_made_by_user/{madeBy}")
     public Iterable<Reservation> getReservationsByThisUser(@PathVariable String madeBy){
         return customerService.getReservationHistory(madeBy);
     }
-
-
-
 }
