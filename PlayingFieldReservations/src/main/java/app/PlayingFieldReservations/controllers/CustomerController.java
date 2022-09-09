@@ -21,9 +21,9 @@ public class CustomerController {
         return "Потребителят беше успешно регистриран!";
     }
 
-    @PutMapping("/customer/change_customer_Information/{phone}") //works add check to see if such customer exists
-    public String changePersonalInformation(@RequestBody Customer newCustomerData,@PathVariable int phone){
-        customerService.changePersonalInformation(newCustomerData, phone);
+    @PutMapping("/customer/change_customer_Information/{email}") //works add check to see if such customer exists
+    public String changePersonalInformation(@RequestBody Customer newCustomerData,@PathVariable String email){
+        customerService.changePersonalInformation(newCustomerData, email);
 
         return ("Информацията беше успешно обновена!");
     }

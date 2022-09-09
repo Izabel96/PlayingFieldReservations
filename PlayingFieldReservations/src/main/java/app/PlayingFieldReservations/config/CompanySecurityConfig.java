@@ -1,6 +1,7 @@
 package app.PlayingFieldReservations.config;
 
-import app.PlayingFieldReservations.security.CustomCustomerDetailService;
+import app.PlayingFieldReservations.security.CustomAdminDetailsService;
+import app.PlayingFieldReservations.security.CustomCompanyDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -14,39 +15,38 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@Order(2)
+@Order(3)
 @EnableWebSecurity
-public class CustomerSecurityConfig extends WebSecurityConfigurerAdapter {
+public class CompanySecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Bean
-    public UserDetailsService customerDetailsService() {
-        return new CustomCustomerDetailService();
+    public UserDetailsService companyDetailsService() {
+        return new CustomCompanyDetailsService();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder2() {
+    public PasswordEncoder passwordEncoder3() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
 
-    public DaoAuthenticationProvider authenticationProvider2() {
-        DaoAuthenticationProvider authenticationProvider2 = new DaoAuthenticationProvider();
-        authenticationProvider2.setUserDetailsService(customerDetailsService());
-        authenticationProvider2.setPasswordEncoder(passwordEncoder2());
-        return authenticationProvider2;
+    public DaoAuthenticationProvider authenticationProvider3() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(companyDetailsService());
+        authenticationProvider.setPasswordEncoder(passwordEncoder3());
+        return authenticationProvider;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider2());
+        auth.authenticationProvider(authenticationProvider3());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/home").permitAll();
-        http.authorizeRequests().antMatchers("/customer/register", "/customer/change_customer_Information/{phone}",
-                        "/customer/reserve_field/{madeBy}/{fieldId}", "/customer/cancel_reservation/{reservationId}/{fieldId}",
-                        "/customer/get_reservations_made_by_user/{madeBy}").authenticated()
+        http.authorizeRequests().antMatchers("view_all_fields").authenticated()
                 .and()
                 .formLogin().permitAll()
                 .and()

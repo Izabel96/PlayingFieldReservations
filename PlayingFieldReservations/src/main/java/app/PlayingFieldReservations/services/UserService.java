@@ -19,10 +19,10 @@ public class UserService {
 	}
 	
 	public String cancelReservation(long reservationId, int fieldId) {
-		Reservation toCancel =  reservationRepository.findById(reservationId);
+			Reservation toCancel = reservationRepository.findById(reservationId);
 
-		fieldService.changeFieldState(fieldId, "Свободно");
-		reservationRepository.delete(toCancel);
-		return "Резервацията е успешно отменена!";
-	}
+			fieldService.changeFieldState(fieldId, "Свободно");
+			reservationRepository.delete(toCancel);
+			return "Резервацията е успешно отменена!";
+		}
 }

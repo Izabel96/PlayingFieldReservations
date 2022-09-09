@@ -47,10 +47,10 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/home").permitAll();
+        http.authorizeRequests().antMatchers("/home", "view_all_fields", "/admin/delete_company/{companyId}",
+                "/admin/delete_reservation/{reservationId}/{fieldId}", "/admin/delete_customer/{id}" ).permitAll();
         http.authorizeRequests().antMatchers("/admin/add_company", "/admin/view_all_companies", "/admin/view_all_reservations",
-                        "/admin/view_all_customers", "/admin/home","/admin/delete_company/{companyId}",
-                        "/admin/delete_customer/{id}", "/admin/delete_reservation/{reservationId}/{fieldId}",
+                        "/admin/view_all_customers", "/admin/home",
                         "/admin/get_all_admins", "/admin/register_admin").authenticated()
                 .and()
                 .formLogin().permitAll()

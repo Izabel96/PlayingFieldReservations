@@ -44,9 +44,9 @@ public class CustomerService extends UserService {
             customerRepository.save(customer);
     }
 
-    public void changePersonalInformation(Customer newCustomerData, int phone){ //TODO: connection with keycloak
+    public void changePersonalInformation(Customer newCustomerData, String email){ //
         //TODO: check if user is the same as the one being edited, else - exeption
-        Customer customerToEdit = customerRepository.findCustomerByPhoneNumber(phone);
+        Customer customerToEdit = customerRepository.findByEmail(email);
         customerToEdit.setFirstName(newCustomerData.getFirstName());
         customerToEdit.setLastName(newCustomerData.getLastName());
         customerToEdit.setEmail(newCustomerData.getEmail());

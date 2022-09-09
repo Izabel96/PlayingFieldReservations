@@ -17,57 +17,62 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @PostMapping("/admin/add_company") //works
-    public String addCompany(@RequestBody Company company){ //TODO:login as admin to do this
+    @PostMapping("/admin/add_company") //test
+    public String addCompany(@RequestBody Company company){
         adminService.addCompany(company);
         return "Успешно добавена компания!";
     }
 
     @GetMapping("/admin/view_all_companies")// works
-    public ResponseEntity viewAllCompanies() throws Exception{
-        try {
+    public ResponseEntity viewAllCompanies() {
             Iterable<Company> allCompanies = adminService.viewAllCompanies();
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(allCompanies);
-        }catch (NullPointerException e){
-            return ResponseEntity
-                    .status(HttpStatus.FORBIDDEN)
-                    .body("Няма регистирани компании!");
-        }
+            if(allCompanies == null){
+                return ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body("Няма регистрирани компании!");
+            }else {
+                return ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(allCompanies);
+            }
     }
 
     @GetMapping("/admin/view_all_reservations")// works
-    public Iterable<Reservation> viewAllReservations(){
-        if(adminService.viewAllReservations() == null){
-            throw new NullPointerException(String.format("Няма направени регистрации!"));
-        }
-        else{
-            return adminService.viewAllReservations();
+    public ResponseEntity viewAllReservations(){
+        Iterable<Reservation> allReservations = adminService.viewAllReservations();
+        if(allReservations == null){
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Няма направени резервации!");
+        }else {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(allReservations);
         }
     }
 
     @GetMapping("/admin/view_all_customers") //works
-    public Iterable<Customer> viewAllCustomers(){
-        if(adminService.viewAllCustomers() == null){
-            throw new NullPointerException(String.format("Няма регистрирани потребители!"));
-        }
-        else{
-            return adminService.viewAllCustomers();
+    public ResponseEntity viewAllCustomers(){
+        Iterable<Customer> allCustomers = adminService.viewAllCustomers();
+        if(allCustomers == null){
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Няма регистрирани потребители!");
+        }else {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(allCustomers);
         }
     }
 
-    @GetMapping("/admin/home") //works
-    public ModelAndView viewAdminHome(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("admin_home");
-        return modelAndView;
-        //return "Успешно влязохте в адмистраторски профил!";
+    @GetMapping("/admin/home") //works, add paths to other methods for admin
+    public String viewAdminHome(){
+        return "Успешно влязохте в адмистраторски профил!";
     }
 
     @Transactional
     @DeleteMapping("/admin/delete_company/{companyId}") //works
-    public ResponseEntity deleteCompany(@PathVariable long companyId) throws Exception { //TODO:login as admin to do this
+    public ResponseEntity deleteCompany(@PathVariable long companyId) throws Exception {
         try {
             adminService.removeCompany(companyId);
             return ResponseEntity
@@ -101,12 +106,16 @@ public class AdminController {
     }
 
     @GetMapping("/admin/get_all_admins")
-    public Iterable<Admin> viewAllAdmins(){
-        if(adminService.getAllAdmins() == null){
-            throw new NullPointerException(String.format("Няма регистриран админ!!"));
-            }
-        else{
-            return adminService.getAllAdmins();
+    public ResponseEntity viewAllAdmins(){
+        Iterable<Admin> allAdmins = adminService.getAllAdmins();
+        if(allAdmins == null){
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Няма регистрирани админи!");
+        }else {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(allAdmins);
         }
     }
 

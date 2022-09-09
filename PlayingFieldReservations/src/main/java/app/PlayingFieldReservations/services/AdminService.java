@@ -30,69 +30,70 @@ public class AdminService extends UserService {
     ReservationRepository reservationRepository;
 
     public Iterable<Company> viewAllCompanies() { //works
-                if (!companyRepository.findAll().isEmpty()) {
-                    return companyRepository.findAll();
-                }else{
-                    throw  new NullPointerException("Няма регистрирани компании.");
-                }
+        if (companyRepository.findAll().isEmpty()) {
+            return null;
+        } else {
+            return companyRepository.findAll();
+        }
+    }
+
+        public Iterable<Admin> getAllAdmins () {
+            if (adminRepository.findAll().isEmpty()) {
+                return null;
+            } else {
+                return adminRepository.findAll();
             }
+        }
 
-    public Iterable<Admin> getAllAdmins(){
-        if (!adminRepository.findAll().isEmpty()) {
-            return adminRepository.findAll();
-        }else{
-            throw  new NullPointerException("Няма регистрирани админи.");
+        public Iterable<Customer> viewAllCustomers () { //works
+            if (customerRepository.findAll().isEmpty()) {
+                return null;
+            } else {
+                return customerRepository.findAll();
+            }
+        }
+
+        public Iterable<Reservation> viewAllReservations () { //works
+            if (reservationRepository.findAll().isEmpty()) {
+                return null;
+            } else {
+                return reservationRepository.findAll();
+            }
+        }
+
+        public void addCompany (Company company){ //add check if it already exists
+            company.setPassword(passwordEncoder.encode(company.getPassword()));
+            companyRepository.save(company);
+        }
+
+        public void removeCompany ( long companyId){
+            Company checkIfExists = companyRepository.findById(companyId);
+            if (checkIfExists != null) {
+                companyRepository.deleteById(companyId);
+            } else {
+                throw new IllegalArgumentException("Не съществува потребител с такова id!");
+            }
+        }
+
+        public void removeCustomer ( long customerId){
+            Customer checkIfExists = customerRepository.findById(customerId);
+            if (checkIfExists != null) {
+                customerRepository.deleteById(customerId);
+            } else {
+                throw new IllegalArgumentException("Не съществува потребител с такова id!");
+            }
+        }
+
+
+        @Override
+        public String cancelReservation ( long reservationId, int fieldId){
+
+            return super.cancelReservation(reservationId, fieldId);
+        }
+
+        public void addAdmin (Admin admin){
+            admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+            adminRepository.save(admin);
         }
     }
 
-    public Iterable<Customer> viewAllCustomers(){ //works TODO: add check if empty, see softuni projects
-        if (!customerRepository.findAll().isEmpty()) {
-            return customerRepository.findAll();
-        }else{
-            throw  new NullPointerException("Няма регистрирани потребители.");
-        }
-    }
-
-    public Iterable<Reservation> viewAllReservations(){ //works
-        if (!reservationRepository.findAll().isEmpty()) {
-            return reservationRepository.findAll();
-        }else{
-            throw  new NullPointerException("Няма направени резервации.");
-        }
-    }
-
-    public void addCompany(Company company){ //add check if it already exists
-        company.setPassword(passwordEncoder.encode(company.getPassword()));
-        companyRepository.save(company);
-    }
-
-    public void removeCompany(long companyId){
-        Company checkIfExists = companyRepository.findById(companyId);
-        if(checkIfExists != null){
-            companyRepository.deleteById(companyId);
-        }else{
-            throw new IllegalArgumentException("Не съществува потребител с такова id!");
-        }
-    }
-
-    public void removeCustomer(long customerId){
-        Customer checkIfExists = customerRepository.findById(customerId);
-        if(checkIfExists != null){
-            customerRepository.deleteById(customerId);
-        }else{
-            throw new IllegalArgumentException("Не съществува потребител с такова id!");
-        }
-    }
-
-
-    @Override
-    public String cancelReservation(long reservationId, int fieldId){
-
-        return super.cancelReservation(reservationId, fieldId);
-    }
-
-    public void addAdmin(Admin admin){
-        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-        adminRepository.save(admin);
-    }
-}
