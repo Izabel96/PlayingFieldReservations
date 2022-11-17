@@ -5,10 +5,10 @@ import javax.persistence.Entity;
 
 @Entity
 public class Admin extends User {
+	
 	private String firstName;
 	private String lastName;
-	private String email;
-	private int phoneNumber;
+
 
 	public String getFirstName() {
 		return firstName;
@@ -26,23 +26,33 @@ public class Admin extends User {
 		this.lastName = lastName;
 	}
 
+	
+
+
+
+	@Override
 	public String getEmail() {
-		return email;
+		// TODO Auto-generated method stub
+		return super.getEmail();
 	}
 
+	@Override
 	public void setEmail(String email) {
-		this.email = email;
+		// TODO Auto-generated method stub
+		super.setEmail(email);
 	}
 
+	@Override
 	public int getPhoneNumber() {
-		return phoneNumber;
+		// TODO Auto-generated method stub
+		return super.getPhoneNumber();
 	}
 
+	@Override
 	public void setPhoneNumber(int phoneNumber) {
-		this.phoneNumber = phoneNumber;
+		// TODO Auto-generated method stub
+		super.setPhoneNumber(phoneNumber);
 	}
-
-
 
 	public Admin() {
 		super();
@@ -50,6 +60,7 @@ public class Admin extends User {
 
 	@Override
 	public long getId() {
+		// TODO Auto-generated method stub
 		return super.getId();
 	}
 

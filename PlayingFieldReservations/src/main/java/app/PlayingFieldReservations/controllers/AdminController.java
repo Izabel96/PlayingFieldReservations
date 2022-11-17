@@ -1,10 +1,13 @@
 package app.PlayingFieldReservations.controllers;
 
 import app.PlayingFieldReservations.entitites.Admin;
+import app.PlayingFieldReservations.entitites.User;
+
 import app.PlayingFieldReservations.entitites.Company;
 import app.PlayingFieldReservations.entitites.Customer;
 import app.PlayingFieldReservations.entitites.Reservation;
 import app.PlayingFieldReservations.services.AdminService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +28,7 @@ public class AdminController {
 
     @GetMapping("/admin/view_all_companies")// works
     public ResponseEntity viewAllCompanies() {
-            Iterable<Company> allCompanies = adminService.viewAllCompanies();
+            Iterable<User> allCompanies = adminService.viewAllCompanies();
             if(allCompanies == null){
                 return ResponseEntity
                         .status(HttpStatus.OK)
@@ -53,7 +56,7 @@ public class AdminController {
 
     @GetMapping("/admin/view_all_customers") //works
     public ResponseEntity viewAllCustomers(){
-        Iterable<Customer> allCustomers = adminService.viewAllCustomers();
+        Iterable<User> allCustomers = adminService.viewAllCustomers();
         if(allCustomers == null){
             return ResponseEntity
                     .status(HttpStatus.OK)
@@ -107,7 +110,7 @@ public class AdminController {
 
     @GetMapping("/admin/get_all_admins")
     public ResponseEntity viewAllAdmins(){
-        Iterable<Admin> allAdmins = adminService.getAllAdmins();
+        Iterable<User> allAdmins = adminService.getAllAdmins();
         if(allAdmins == null){
             return ResponseEntity
                     .status(HttpStatus.OK)

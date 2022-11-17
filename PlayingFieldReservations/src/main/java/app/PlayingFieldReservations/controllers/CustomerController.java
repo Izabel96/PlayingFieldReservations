@@ -21,6 +21,12 @@ public class CustomerController {
         return "Потребителят беше успешно регистриран!";
     }
 
+    @GetMapping("/customer_home") //test for login
+    public String customerHome(){
+        return "Успешен вход!";
+    }
+
+
     @PutMapping("/customer/change_customer_Information/{email}") //works add check to see if such customer exists
     public String changePersonalInformation(@RequestBody Customer newCustomerData,@PathVariable String email){
         customerService.changePersonalInformation(newCustomerData, email);

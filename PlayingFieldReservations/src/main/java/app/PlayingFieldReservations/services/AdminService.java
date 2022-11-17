@@ -5,51 +5,45 @@ import app.PlayingFieldReservations.entitites.Admin;
 import app.PlayingFieldReservations.entitites.Company;
 import app.PlayingFieldReservations.entitites.Customer;
 import app.PlayingFieldReservations.entitites.Reservation;
-import app.PlayingFieldReservations.repositories.AdminRepository;
-import app.PlayingFieldReservations.repositories.CompanyRepository;
-import app.PlayingFieldReservations.repositories.CustomerRepository;
+import app.PlayingFieldReservations.entitites.User;
 import app.PlayingFieldReservations.repositories.ReservationRepository;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import app.PlayingFieldReservations.repositories.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AdminService extends UserService {
-    private static final Logger console = LogManager.getLogger(AdminService.class);
+
+    //@Autowired
+    //private PasswordEncoder passwordEncoder;
     @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    AdminRepository adminRepository;
-    @Autowired
-    CompanyRepository companyRepository;
-    @Autowired
-    CustomerRepository customerRepository;
+    UserRepository userRepository;
     @Autowired
     ReservationRepository reservationRepository;
 
-    public Iterable<Company> viewAllCompanies() { //works
-        if (companyRepository.findAll().isEmpty()) {
+    public Iterable<User> viewAllCompanies() { //works
+        if (userRepository.findAll().isEmpty()) {
             return null;
         } else {
-            return companyRepository.findAll();
+            return userRepository.findAll();
         }
     }
 
-        public Iterable<Admin> getAllAdmins () {
-            if (adminRepository.findAll().isEmpty()) {
+        public Iterable<User> getAllAdmins () {
+            if (userRepository.findAll().isEmpty()) {
                 return null;
             } else {
-                return adminRepository.findAll();
+                return userRepository.findAll();
             }
         }
 
-        public Iterable<Customer> viewAllCustomers () { //works
-            if (customerRepository.findAll().isEmpty()) {
+        public Iterable<User> viewAllCustomers () { //works
+            if (userRepository.findAll().isEmpty()) {
                 return null;
             } else {
-                return customerRepository.findAll();
+                return userRepository.findAll();
             }
         }
 
@@ -62,23 +56,23 @@ public class AdminService extends UserService {
         }
 
         public void addCompany (Company company){ //add check if it already exists
-            company.setPassword(passwordEncoder.encode(company.getPassword()));
-            companyRepository.save(company);
+            //company.setPassword(passwordEncoder.encode(company.getPassword()));
+            userRepository.save(company);
         }
 
-        public void removeCompany ( long companyId){
-            Company checkIfExists = companyRepository.findById(companyId);
+        public void removeCompany ( long id){
+            Company checkIfExists = (Company) userRepository.findById(id);
             if (checkIfExists != null) {
-                companyRepository.deleteById(companyId);
+                userRepository.deleteById(id);
             } else {
                 throw new IllegalArgumentException("Не съществува потребител с такова id!");
             }
         }
 
-        public void removeCustomer ( long customerId){
-            Customer checkIfExists = customerRepository.findById(customerId);
+        public void removeCustomer ( long id){
+            Customer checkIfExists = (Customer) userRepository.findById(id);
             if (checkIfExists != null) {
-                customerRepository.deleteById(customerId);
+                userRepository.deleteById(id);
             } else {
                 throw new IllegalArgumentException("Не съществува потребител с такова id!");
             }
@@ -92,8 +86,8 @@ public class AdminService extends UserService {
         }
 
         public void addAdmin (Admin admin){
-            admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-            adminRepository.save(admin);
+            //admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+            userRepository.save(admin);
         }
     }
 

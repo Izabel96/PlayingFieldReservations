@@ -2,7 +2,8 @@ package app.PlayingFieldReservations.services;
 
 import app.PlayingFieldReservations.entitites.Customer;
 import app.PlayingFieldReservations.entitites.Reservation;
-import app.PlayingFieldReservations.repositories.CustomerRepository;
+import app.PlayingFieldReservations.repositories.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,8 @@ import java.util.Collection;
 
 @Service
 public class CustomerService extends UserService {
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    //@Autowired
+    //private PasswordEncoder passwordEncoder;
 
     /*@ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -27,7 +28,7 @@ public class CustomerService extends UserService {
     )*/
 
     @Autowired
-    CustomerRepository customerRepository;
+    UserRepository userRepository;
     @Override
     public String reserveField(String madeBy, int id, String duration) { // works
 
@@ -40,19 +41,19 @@ public class CustomerService extends UserService {
     }
 
     public void addRegisteredCustomer(Customer customer){
-            customer.setPassword(passwordEncoder.encode(customer.getPassword()));
-            customerRepository.save(customer);
+            //customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+            userRepository.save(customer);
     }
 
     public void changePersonalInformation(Customer newCustomerData, String email){ //
         //TODO: check if user is the same as the one being edited, else - exeption
-        Customer customerToEdit = customerRepository.findByEmail(email);
+        Customer customerToEdit = (Customer) userRepository.findByEmail(email);
         customerToEdit.setFirstName(newCustomerData.getFirstName());
         customerToEdit.setLastName(newCustomerData.getLastName());
         customerToEdit.setEmail(newCustomerData.getEmail());
         customerToEdit.setPhoneNumber(newCustomerData.getPhoneNumber());
-
-        customerRepository.save(customerToEdit);
+        //TODO: check if not saving the same user twice!!
+        userRepository.save(customerToEdit);
     }
 
     public Iterable<Reservation> getReservationHistory(String madeBy){

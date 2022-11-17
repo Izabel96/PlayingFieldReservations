@@ -6,23 +6,13 @@ import javax.persistence.*;
 @Entity
 public class Customer extends User {
 
-	private long customerId;
 	private String firstName;
 	private String lastName;
-	private String email;
-	private int phoneNumber;
 
 	public Customer() {
 		super();
 	}
 
-	public long getCustomerId() {
-		return super.getId();
-	}
-
-	public void setCustomerId(long customerId) {
-		super.setId();
-	}
 
 	public String getFirstName() {
 		return firstName;
@@ -40,21 +30,6 @@ public class Customer extends User {
 		this.lastName = lastName;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public int getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(int phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
 
 
 	@Override
@@ -76,4 +51,49 @@ public class Customer extends User {
 	public void setPassword(String password) {
 		super.setPassword(password);
 	}
+
+
+	@Override
+	public String getEmail() {
+		// TODO Auto-generated method stub
+		return super.getEmail();
+	}
+
+
+	@Override
+	public void setEmail(String email) {
+		// TODO Auto-generated method stub
+		super.setEmail(email);
+	}
+
+
+	@Override
+	public int getPhoneNumber() {
+		// TODO Auto-generated method stub
+		return super.getPhoneNumber();
+	}
+
+
+	@Override
+	public void setPhoneNumber(int phoneNumber) {
+		// TODO Auto-generated method stub
+		super.setPhoneNumber(phoneNumber);
+	}
+
+
+	@Override
+	public long getId() {
+		// TODO Auto-generated method stub
+		return super.getId();
+	}
+
+
+	@Override
+	public void setId() {
+		// TODO Auto-generated method stub
+		super.setId();
+	}
+	
+	
+	
 }
