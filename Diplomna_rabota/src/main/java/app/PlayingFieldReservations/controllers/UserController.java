@@ -1,7 +1,10 @@
 package app.PlayingFieldReservations.controllers;
 
+import java.security.Principal;
+
 import javax.transaction.Transactional;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.PlayingFieldReservations.entitites.Field;
@@ -164,9 +170,12 @@ public class UserController {
         return "Потребителят беше успешно регистриран!";
     }
 
-    @GetMapping("/customer/home") //test for login
-    public String customerHome(){
-        return "Успешен вход клиент!";
+    @RequestMapping(value = "/customer/view_profile_info", method = RequestMethod.GET) //test for login
+    @ResponseBody
+    public String customerProfile(Principal principal){
+    	String email = principal.getName();
+    	System.out.print(email);
+        return userService.viewProfileInfo(email);
     }
 
     @GetMapping("/company/home_page") //test for login

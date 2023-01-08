@@ -102,5 +102,11 @@ public class Users {
 		this.active = active;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("User with id=" + id + " has: \n" + "userName=" + username + ", password=" + password + ", email=" 
+	+ email + ", roles=" + roles + ", firstName=" + firstName + 
+	", lastName=" + lastName + ", status=" + active +"]" + "\n");
+	}
 	
 }

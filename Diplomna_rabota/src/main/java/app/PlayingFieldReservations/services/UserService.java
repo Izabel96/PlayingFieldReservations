@@ -125,5 +125,16 @@ public class UserService {
          //TODO: check if not saving the same user twice!!
          userRepository.save(customerToEdit);
      }
+     
+     public String viewProfileInfo(String email){
+    	 Users currUser = userRepository.findByEmail(email);
+    	 if(!(currUser == null)) {
+    	 return currUser.toString();
+    	 }
+    	 else {
+    		 return "Няма намерен потребител!";
+    	 }
+
+     }
 
 }
