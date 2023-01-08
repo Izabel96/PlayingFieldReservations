@@ -1,6 +1,9 @@
 package app.PlayingFieldReservations.entitites;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -13,6 +16,7 @@ public class Users {
 	private int phoneNumber;
 	private String firstName;
 	private String lastName;
+	private boolean active;
 	@Id
 	//@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -91,4 +95,12 @@ public class Users {
 	public void setId(){
 		this.id = id;
 	}
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	
+	
 }

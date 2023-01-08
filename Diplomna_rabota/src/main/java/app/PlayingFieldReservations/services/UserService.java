@@ -103,6 +103,7 @@ public class UserService {
     	 user.addRole(roleAdmin);
     	 
          user.setPassword(passwordEncoder.encode(user.getPassword()));
+         user.setActive(true);
          userRepository.save(user);
      }
  
@@ -125,7 +126,7 @@ public class UserService {
          userRepository.save(user);
  }
 
-     public void changePersonalInformation(Users newCustomerData, String email){ //
+     /*public void changePersonalInformation(Users newCustomerData, String email){ //
          //TODO: check if user is the same as the one being edited, else - exception
          Users customerToEdit = (Users) userRepository.findByEmail(email);
          //customerToEdit.setFirstName(newCustomerData.getFirstName());
@@ -134,6 +135,6 @@ public class UserService {
          customerToEdit.setPhoneNumber(newCustomerData.getPhoneNumber());
          //TODO: check if not saving the same user twice!!
          userRepository.save(customerToEdit);
-     }
+     }*/
 
 }

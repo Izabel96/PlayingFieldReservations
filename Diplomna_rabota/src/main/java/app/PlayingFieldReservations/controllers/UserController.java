@@ -170,12 +170,12 @@ public class UserController {
     }
 
 
-    @PutMapping("/customer/change_customer_Information/{email}") //works add check to see if such customer exists
+    /*@PutMapping("/customer/change_customer_Information/{email}") //works add check to see if such customer exists
     public String changePersonalInformation(@RequestBody Users newCustomerData,@PathVariable String email){
         userService.changePersonalInformation(newCustomerData, email);
 
         return ("Информацията беше успешно обновена!");
-    }
+    }*/
 
     @PutMapping("/customer/reserve_field/{madeBy}/{fieldId}") //works
     public String reserveField(@PathVariable String madeBy, @PathVariable int fieldId, @RequestBody String duration){

@@ -52,8 +52,8 @@ public class MainController {
     //}
 
 
-    //@GetMapping ("/admin/login")
-    //public String viewAdminLoginPage() {
-        //return "Успешен вход";
-    //}
+    @GetMapping ("/admin/login")
+    public String viewAdminLoginPage() {
+        return "Успешен вход админ!";
+    }
 }
