@@ -138,14 +138,14 @@ public class UserController {
         return "Admin successfully added!";
     }
     
-    @PutMapping("/change_company_information/{phone}") //works //TODO: log in to change info //test after fixing add company
+    @PutMapping("/company/change_company_information/{phone}") //works //TODO: log in to change info //test after fixing add company
     public String changePersonalInformation(@RequestBody Users newCompanyData, @PathVariable int phone){
         userService.changeCompanyInformation(newCompanyData, phone);
 
         return ("Информацията беше успешно обновена!");
     }
 
-    @PostMapping("/add_new_field") //works TODO: log in to add field
+    @PostMapping("/company/add_new_field") //works TODO: log in to add field
     public void addNewField(@RequestBody Field field) {
         fieldService.addNewField(field);
     }
@@ -164,11 +164,15 @@ public class UserController {
         return "Потребителят беше успешно регистриран!";
     }
 
-    @GetMapping("/customer_home") //test for login
+    @GetMapping("/customer/home") //test for login
     public String customerHome(){
-        return "Успешен вход!";
+        return "Успешен вход клиент!";
     }
 
+    @GetMapping("/company/home_page") //test for login
+    public String companyHome(){
+        return "Успешен вход компания!";
+    }
 
     /*@PutMapping("/customer/change_customer_Information/{email}") //works add check to see if such customer exists
     public String changePersonalInformation(@RequestBody Users newCustomerData,@PathVariable String email){

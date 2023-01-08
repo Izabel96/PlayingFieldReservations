@@ -30,17 +30,6 @@ public class UserService {
         if (userRepository.findAll().isEmpty()) {
             return null;
         } else {
-           /* //return userRepository.findAll();
-        	Role roleCompany = roleRepository.findByName("Company");
-        	//return userRepository.findByRole((Set<Role>) roleCompany);
-        	Iterable<Users> all = userRepository.findAll();
-        	List<Users> companies = new ArrayList<Users>();
-        	for (Users user : all) {
-				if(user.getRoles().) {
-					companies.add(user);
-				}
-			}
-        	return companies;*/
         	Role roleCompany = roleRepository.findByName("Company");
         	Set<Role> searchRoles = new HashSet<>();
         	searchRoles.add(roleCompany);
@@ -52,7 +41,6 @@ public class UserService {
          if (userRepository.findAll().isEmpty()) {
              return null;
          } else {
-             //return userRepository.findAll();
          	Role roleAdmin = roleRepository.findByName("Admin");
          	Set<Role> searchRoles = new HashSet<>();
          	searchRoles.add(roleAdmin);
@@ -64,7 +52,6 @@ public class UserService {
          if (userRepository.findAll().isEmpty()) {
              return null;
          } else {
-             //return userRepository.findAll();
          	Role roleCustomer = roleRepository.findByName("Customer");
          	Set<Role> searchRoles = new HashSet<>();
          	searchRoles.add(roleCustomer);
@@ -77,6 +64,7 @@ public class UserService {
     	 user.addRole(roleCompany);
     	 
          user.setPassword(passwordEncoder.encode(user.getPassword()));
+         user.setActive(true);
          userRepository.save(user);
      }
 
@@ -123,18 +111,19 @@ public class UserService {
     	 user.addRole(roleCustomer);
     	 
          user.setPassword(passwordEncoder.encode(user.getPassword()));
+         user.setActive(true);
          userRepository.save(user);
  }
 
-     /*public void changePersonalInformation(Users newCustomerData, String email){ //
+     public void changePersonalInformation(Users newCustomerData, String email){ //
          //TODO: check if user is the same as the one being edited, else - exception
          Users customerToEdit = (Users) userRepository.findByEmail(email);
-         //customerToEdit.setFirstName(newCustomerData.getFirstName());
-         //customerToEdit.setLastName(newCustomerData.getLastName());
+         customerToEdit.setFirstName(newCustomerData.getFirstName());
+         customerToEdit.setLastName(newCustomerData.getLastName());
          customerToEdit.setEmail(newCustomerData.getEmail());
          customerToEdit.setPhoneNumber(newCustomerData.getPhoneNumber());
          //TODO: check if not saving the same user twice!!
          userRepository.save(customerToEdit);
-     }*/
+     }
 
 }

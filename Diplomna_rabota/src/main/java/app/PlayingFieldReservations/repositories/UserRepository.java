@@ -13,7 +13,8 @@ import app.PlayingFieldReservations.entitites.Users;
 
 public interface UserRepository extends JpaRepository<Users, Long> {
     Boolean existsByEmail(String email);
-    Optional<Users> findByEmail(String email);
+    //Optional<Users> findByEmail(String email);
+    Users findByEmail(String email);
     Users findByPhoneNumber(int phoneNumber);
     Users findById (long id);
     void deleteById(long id);
