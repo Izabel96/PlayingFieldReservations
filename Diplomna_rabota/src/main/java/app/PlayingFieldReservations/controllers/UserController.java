@@ -148,9 +148,9 @@ public class UserController {
         return ("Информацията беше успешно обновена!");
     }
 
-    @PostMapping("/company/add_new_field") //works TODO: log in to add field
-    public void addNewField(@RequestBody Field field) {
-        fieldService.addNewField(field);
+    @PostMapping("/company/add_new_field") //works
+    public String addNewField(@RequestBody Field field) {
+        return fieldService.addNewField(field);
     }
 
     @Transactional

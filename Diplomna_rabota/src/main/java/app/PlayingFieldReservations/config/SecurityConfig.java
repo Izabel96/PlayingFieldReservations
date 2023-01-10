@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/admin/**");
+		web.ignoring().antMatchers("/view_all_fields_for_city/{city}");
 	}
 	
 

@@ -80,9 +80,9 @@ public class Field {
 
 	@Override
 	public String toString() {
-		return "Field [fieldId=" + fieldId + ", fieldName=" + fieldName + ", location=" + location + ", type=" + type
-				+ ", state=" + state + ", price=" + price + ", contactInformation=" + contactInformation
-				+ ", workingHours=" + workingHours + "]";
+		return "Спортно игрище " + fieldName + ": идентификационен номер: " + fieldId + ",  локация: " + location + ", вид: " + type
+				+ ", състояние: " + state + ", цена: " + price + ", контакт: " + contactInformation
+				+ ", работно време: " + workingHours;
 	}
 	
 	

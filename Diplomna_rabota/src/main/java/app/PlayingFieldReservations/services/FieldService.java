@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import app.PlayingFieldReservations.entitites.Field;
 import app.PlayingFieldReservations.repositories.FieldRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 
@@ -17,28 +20,54 @@ public class FieldService {
 	FieldRepository fieldRepository;
 	@Autowired
 	ReservationRepository reservationRepository;
-	public void addNewField(Field field) {
+	public String addNewField(Field field) {
 		if(fieldRepository.findAll().contains(field)){
-			System.out.println("Това игрище вече съществува!!");
+			return "Това игрище вече съществува!!";
 		}else {
 			fieldRepository.save(field);
+			return "Игрището беше успешно добавено!";
 		}
 	}
 	@Transactional
 	public void deleteField(int fieldId) {
 		if(fieldRepository.findByFieldId(fieldId) == null){
-			System.out.println("Не съшществува игрище с такова id.");
+			System.out.println("Не съществува игрище с такова id.");
 		}else {
 			fieldRepository.deleteById(fieldId);
 		}
 	}
 	
-	public Iterable<Field> getAllFields(){
+	public List<String> getAllFields(){
 		if(fieldRepository.findAll() == null){
 			System.out.println("Няма добавени игрища.");
 			return null;
 		}
-		return fieldRepository.findAll();
+		List<Field> allFields = fieldRepository.findAll();
+		List<String> allFieldsToString = new ArrayList<>();
+		for (Field field : allFields) {
+			allFieldsToString.add(field.toString());
+			allFieldsToString.add(System.lineSeparator());
+		}
+		return allFieldsToString;
+	}
+	
+	public List<String> getAllFieldsByCity(String city){
+		if(fieldRepository.findAll() == null){
+			System.out.println("Няма добавени игрища за този град.");
+			return null;
+		}
+		
+		List<Field> allFieldsIterable = fieldRepository.findAll();
+		List<String> fieldsForCity = new ArrayList<>();
+		System.out.print(city);
+		for (Field field : allFieldsIterable) {
+			String adress = field.getLocation();
+			if(adress.contains(city)) {
+				fieldsForCity.add(field.toString());
+				fieldsForCity.add(System.lineSeparator());
+			}
+		}
+		return fieldsForCity;
 	}
 	
 	public Field getFieldById(int fieldId){

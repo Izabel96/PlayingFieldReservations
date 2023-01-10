@@ -100,9 +100,9 @@ public class Users {
 	
 	@Override
 	public String toString() {
-		return String.format("User with id=" + id + " has: \n" + "userName=" + username + ", password=" + password + ", email=" 
-	+ email + ", roles=" + roles + ", firstName=" + firstName + 
-	", lastName=" + lastName + ", status=" + active +"]" + "\n");
+		return String.format("Потребител с id: " + id + " има: " + "потребителско име: " + username + ", имейл: " 
+	+ email + ", роли: " + roles + ", име: " + firstName + 
+	", фамилия: " + lastName + ", статус:" + active);
 	}
 	
 }
