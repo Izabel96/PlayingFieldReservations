@@ -4,13 +4,8 @@ import app.PlayingFieldReservations.entitites.Role;
 import app.PlayingFieldReservations.entitites.Users;
 import app.PlayingFieldReservations.repositories.RoleRepository;
 import app.PlayingFieldReservations.repositories.UserRepository;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -59,13 +54,23 @@ public class UserService {
          }
      }
      
-     public void addCompany (Users user){ //add check if it already exists
-    	 Role roleCompany = roleRepository.findByName("Company");
-    	 user.addRole(roleCompany);
+     public String addCompany (Users user){ //add check if it already exists
+    	 if(userRepository.findByEmail(user.getEmail()) != null) {
+    		 return "Вече съществува компания с този имейл!";
+    	 }
+    	 if(userRepository.findByUsername(user.getUsername()) != null) {
+    		 return "Потребителското име е заето!";
+    	 }else {
+        	 Role roleCompany = roleRepository.findByName("Company");
+        	 user.addRole(roleCompany);
+        	 
+             user.setPassword(passwordEncoder.encode(user.getPassword()));
+             user.setActive(true);
+             userRepository.save(user);
+             return "Компанията е добавена успешно!";
+    	 }
     	 
-         user.setPassword(passwordEncoder.encode(user.getPassword()));
-         user.setActive(true);
-         userRepository.save(user);
+
      }
 
      public void removeCompany ( long id){
@@ -86,13 +91,21 @@ public class UserService {
          }
      }
      
-     public void addAdmin (Users user){
+     public String addAdmin (Users user){
+    	 if(userRepository.findByEmail(user.getEmail()) != null) {
+    		 return "Вече съществува админ с този имейл!";
+    	 }
+    	 if(userRepository.findByUsername(user.getUsername()) != null) {
+    		 return "Потребителското име е заето!";
+    	 }else {
     	 Role roleAdmin = roleRepository.findByName("Admin");
     	 user.addRole(roleAdmin);
     	 
          user.setPassword(passwordEncoder.encode(user.getPassword()));
          user.setActive(true);
          userRepository.save(user);
+         return "Админът е добавен успешно!";
+    	 }
      }
  
      public void changeCompanyInformation(Users newCompanyData, int phone){ 
@@ -106,13 +119,21 @@ public class UserService {
          userRepository.save(companyToEdit);
      }
      
-     public void addRegisteredCustomer(Users user){
+     public String addRegisteredCustomer(Users user){
+    	 if(userRepository.findByEmail(user.getEmail()) != null) {
+    		 return "Вече съществува потребител с този имейл!";
+    	 }
+    	 if(userRepository.findByUsername(user.getUsername()) != null) {
+    		 return "Потребителското име е заето!";
+    	 }else {
     	 Role roleCustomer = roleRepository.findByName("Customer");
     	 user.addRole(roleCustomer);
     	 
          user.setPassword(passwordEncoder.encode(user.getPassword()));
          user.setActive(true);
          userRepository.save(user);
+         return "Потребителят е добавен успешно!";
+    	 }
  }
 
      public void changePersonalInformation(Users newCustomerData, String email){ //

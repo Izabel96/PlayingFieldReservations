@@ -1,9 +1,6 @@
 package app.PlayingFieldReservations.entitites;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -18,7 +15,6 @@ public class Users {
 	private String lastName;
 	private boolean active;
 	@Id
-	//@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 

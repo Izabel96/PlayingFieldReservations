@@ -4,14 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import app.PlayingFieldReservations.entitites.Field;
 import app.PlayingFieldReservations.entitites.Role;
 import app.PlayingFieldReservations.services.FieldService;
 import app.PlayingFieldReservations.services.RoleService;
 
-import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class MainController {
@@ -45,11 +43,6 @@ public class MainController {
     public Iterable<Role> getAllRoles(){
     	return roleService.getAllRoles();
     }
-
-    //@GetMapping("/login_or_register_customers")
-    //public String loginRegister(){
-       // return "Успешно влязохте в профила си!";
-    //}
 
 
     @GetMapping ("/admin/login")

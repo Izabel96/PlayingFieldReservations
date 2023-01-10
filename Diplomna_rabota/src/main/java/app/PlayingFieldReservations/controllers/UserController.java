@@ -1,10 +1,7 @@
 package app.PlayingFieldReservations.controllers;
 
 import java.security.Principal;
-
 import javax.transaction.Transactional;
-
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,13 +33,13 @@ public class UserController {
     @Autowired
     FieldService fieldService;
 
-    @PostMapping("/admin/add_company") //test
+    @PostMapping("/admin/add_company") //tested, works
     public String addCompany(@RequestBody Users user){
-        userService.addCompany(user);
-        return "Успешно добавена компания!";
+        String statusString = userService.addCompany(user);
+        return statusString;
     }
 
-    @GetMapping("/admin/view_all_companies")// works
+    @GetMapping("/admin/view_all_companies")// TODO: format better the output
     public ResponseEntity viewAllCompanies() {
             Iterable<Users> allCompanies = userService.viewAllCompanies();
             if(allCompanies == null){
@@ -140,8 +137,8 @@ public class UserController {
 
     @PostMapping("/admin/register_admin") //tested, works
     public String addNewAdmin(@RequestBody Users user){
-        userService.addAdmin(user);
-        return "Admin successfully added!";
+        String resultString = userService.addAdmin(user);
+        return resultString;
     }
     
     @PutMapping("/company/change_company_information/{phone}") //works //TODO: log in to change info //test after fixing add company
@@ -166,8 +163,8 @@ public class UserController {
     
     @PostMapping("/customer/register") //tested, works
     public String addNewCustomer(@RequestBody Users user){
-        userService.addRegisteredCustomer(user);
-        return "Потребителят беше успешно регистриран!";
+        String resultString =  userService.addRegisteredCustomer(user);
+        return resultString;
     }
 
     @RequestMapping(value = "/customer/view_profile_info", method = RequestMethod.GET) //test for login
@@ -183,12 +180,12 @@ public class UserController {
         return "Успешен вход компания!";
     }
 
-    /*@PutMapping("/customer/change_customer_Information/{email}") //works add check to see if such customer exists
+    @PutMapping("/customer/change_customer_Information/{email}") //works add check to see if such customer exists
     public String changePersonalInformation(@RequestBody Users newCustomerData,@PathVariable String email){
         userService.changePersonalInformation(newCustomerData, email);
 
         return ("Информацията беше успешно обновена!");
-    }*/
+    }
 
     @PutMapping("/customer/reserve_field/{madeBy}/{fieldId}") //works
     public String reserveField(@PathVariable String madeBy, @PathVariable int fieldId, @RequestBody String duration){
