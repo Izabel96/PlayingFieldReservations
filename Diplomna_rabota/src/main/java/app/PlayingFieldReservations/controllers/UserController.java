@@ -147,6 +147,12 @@ public class UserController {
 
         return ("Информацията беше успешно обновена!");
     }
+    
+    @PutMapping("/company/change_field_information/{id}") 
+    public String changeFieldInformation(@RequestBody Field newData, @PathVariable int id){
+        return fieldService.changeFieldInfo(newData, id);
+
+    }
 
     @PostMapping("/company/add_new_field") //works
     public String addNewField(@RequestBody Field field) {

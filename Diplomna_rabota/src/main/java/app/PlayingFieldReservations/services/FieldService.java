@@ -1,6 +1,7 @@
 package app.PlayingFieldReservations.services;
 
 import app.PlayingFieldReservations.entitites.Reservation;
+import app.PlayingFieldReservations.entitites.Users;
 import app.PlayingFieldReservations.repositories.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class FieldService {
 	ReservationRepository reservationRepository;
 	public String addNewField(Field field) {
 		if(fieldRepository.findAll().contains(field)){
-			return "Това игрище вече съществува!!";
+			return "Това игрище вече съществува!";
 		}else {
 			fieldRepository.save(field);
 			return "Игрището беше успешно добавено!";
@@ -103,5 +104,24 @@ public class FieldService {
 			return String.format("Игрището %s е резервирано от %s за периода %s. Вашият номер на резервацията е %d.",
 					fieldToReserve.getFieldName(), madeBy, duration,reservationId);
 		}
+		
 	}
+	
+    public String changeFieldInfo(Field newData, int id){ 
+        Field fieldToEdit = (Field) fieldRepository.findByFieldId(id);
+        if(fieldToEdit == null) {
+        	return "Няма игрище с такова id!";
+        }else {
+        fieldToEdit.setFieldName(newData.getFieldName());
+        fieldToEdit.setLocation(newData.getLocation());
+        fieldToEdit.setContactInformation(newData.getContactInformation());
+        fieldToEdit.setPrice(newData.getPrice());
+        fieldToEdit.setType(newData.getType());
+        fieldToEdit.setWorkingHours(newData.getWorkingHours());
+        fieldToEdit.setState(newData.getState());
+        //TODO: check if not saving the same user twice!!
+        fieldRepository.save(fieldToEdit);
+        return "Игрището е успешно обновено!";
+        }
+    }
 }
