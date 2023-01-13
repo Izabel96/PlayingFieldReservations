@@ -1,5 +1,7 @@
 package app.PlayingFieldReservations.entitites;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -80,9 +82,11 @@ public class Field {
 
 	@Override
 	public String toString() {
-		return "Спортно игрище " + fieldName + ": идентификационен номер: " + fieldId + ",  локация: " + location + ", вид: " + type
-				+ ", състояние: " + state + ", цена: " + price + ", контакт: " + contactInformation
-				+ ", работно време: " + workingHours;
+		String convertedPrice = String.format("%.2f", price);
+		String newLine = System.lineSeparator();
+		return String.format("Спортно игрище " + fieldName + ": идентификационен номер: " + fieldId + ",  локация: " + location + ", вид: " + type
+				+ ", състояние: " + state + ", цена: " + convertedPrice + ", контакт: " + contactInformation
+				+ ", работно време: " + workingHours + newLine);
 	}
 	
 	

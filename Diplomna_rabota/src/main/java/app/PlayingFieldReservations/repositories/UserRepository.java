@@ -7,7 +7,7 @@ import app.PlayingFieldReservations.entitites.Role;
 import app.PlayingFieldReservations.entitites.Users;
 
 public interface UserRepository extends JpaRepository<Users, Long> {
-    Boolean existsByEmail(String email);
+    //Boolean existsByEmail(String email);
     Users findByEmail(String email);
     Users findByUsername(String username);
     Users findByPhoneNumber(int phoneNumber);

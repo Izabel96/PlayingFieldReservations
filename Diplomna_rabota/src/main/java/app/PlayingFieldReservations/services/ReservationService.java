@@ -18,6 +18,7 @@ public class ReservationService {
 	
 	public String cancelReservation(long reservationId, int fieldId) {
 			Reservation toCancel = reservationRepository.findById(reservationId);
+			String reservationPeriod = toCancel.getReservationDuration();
 
 			fieldService.changeFieldState(fieldId, "Свободно");
 			reservationRepository.delete(toCancel);

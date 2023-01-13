@@ -81,7 +81,24 @@ public class FieldService {
 
 	public void changeFieldState(int fieldId, String state){
 		Field toEdit = fieldRepository.findByFieldId(fieldId);
-		toEdit.setState(state);
+		String newState = "";
+		if(toEdit.getState().contains(state)) {
+			newState = toEdit.getState().replaceAll(state, "");
+		}else {
+		newState = toEdit.getState() + "\n " + state;
+		}
+		toEdit.setState(newState);
+		fieldRepository.save(toEdit);
+	}
+	
+	public void removeReservationPeriod(int fieldId, String duration) {
+		Field toEdit = fieldRepository.findByFieldId(fieldId);
+		String newState = "";
+		if(toEdit.getState().contains(duration)) {
+			newState = toEdit.getState();
+			newState.replaceAll(duration, " ");
+		}
+		toEdit.setState(newState);
 		fieldRepository.save(toEdit);
 	}
 
@@ -119,7 +136,6 @@ public class FieldService {
         fieldToEdit.setType(newData.getType());
         fieldToEdit.setWorkingHours(newData.getWorkingHours());
         fieldToEdit.setState(newData.getState());
-        //TODO: check if not saving the same user twice!!
         fieldRepository.save(fieldToEdit);
         return "Игрището е успешно обновено!";
         }
