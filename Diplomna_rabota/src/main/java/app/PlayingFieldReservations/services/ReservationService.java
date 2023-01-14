@@ -16,7 +16,7 @@ public class ReservationService {
 		return fieldService.reserve(madeBy, id, duration);
 	}
 	
-	public String cancelReservation(long reservationId, int fieldId) {
+	public String cancelReservation(long reservationId, int fieldId) { //TODO: check if there is such reservation
 			Reservation toCancel = reservationRepository.findById(reservationId);
 			String reservationPeriod = toCancel.getReservationDuration();
 

@@ -21,6 +21,7 @@ public class FieldService {
 	FieldRepository fieldRepository;
 	@Autowired
 	ReservationRepository reservationRepository;
+	
 	public String addNewField(Field field) {
 		if(fieldRepository.findAll().contains(field)){
 			return "Това игрище вече съществува!";
@@ -52,9 +53,10 @@ public class FieldService {
 		return allFieldsToString;
 	}
 	
-	public List<String> getAllFieldsByCity(String city){
+	public List<String> getAllFieldsByCity(String city){ 
+		//TODO: fix message if there are no fields, now returns []
 		if(fieldRepository.findAll() == null){
-			System.out.println("Няма добавени игрища за този град.");
+			System.out.println("Няма добавени игрища.");
 			return null;
 		}
 		
@@ -68,6 +70,11 @@ public class FieldService {
 				fieldsForCity.add(System.lineSeparator());
 			}
 		}
+		
+		if(fieldsForCity.isEmpty()) {
+			fieldsForCity.add("Няма добавени игрища за този град!");
+		}
+		
 		return fieldsForCity;
 	}
 	
@@ -79,7 +86,7 @@ public class FieldService {
 		return fieldRepository.findByFieldId(fieldId);
 	}
 
-	public void changeFieldState(int fieldId, String state){
+	public void changeFieldState(int fieldId, String state){ //TODO: fix when having to remove certain state
 		Field toEdit = fieldRepository.findByFieldId(fieldId);
 		String newState = "";
 		if(toEdit.getState().contains(state)) {
@@ -91,7 +98,7 @@ public class FieldService {
 		fieldRepository.save(toEdit);
 	}
 	
-	public void removeReservationPeriod(int fieldId, String duration) {
+	/*public void removeReservationPeriod(int fieldId, String duration) {
 		Field toEdit = fieldRepository.findByFieldId(fieldId);
 		String newState = "";
 		if(toEdit.getState().contains(duration)) {
@@ -100,7 +107,7 @@ public class FieldService {
 		}
 		toEdit.setState(newState);
 		fieldRepository.save(toEdit);
-	}
+	}*/
 
 	public String reserve(String madeBy, int fieldId, String duration) { 
 		Field fieldToReserve = fieldRepository.findByFieldId(fieldId);
@@ -113,7 +120,8 @@ public class FieldService {
 			reservation.setMadeBy(madeBy);
 			reservation.setReservationDuration(duration);
 			reservationRepository.save(reservation);
-			long reservationId = reservationRepository.findByFieldNameAndReservationDuration(fieldToReserve.getFieldName(), duration).getId();
+			long reservationId = reservationRepository
+					.findByFieldNameAndReservationDuration(fieldToReserve.getFieldName(), duration).getId();
 
 			String newState = String.format("Резервирано за " + duration);
 			changeFieldState(fieldId, newState);
