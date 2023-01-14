@@ -87,28 +87,13 @@ public class UserController {
     }
 
     @Transactional
-    @DeleteMapping("/admin/delete_company/{companyId}") //works
-    public ResponseEntity deleteCompany(@PathVariable long companyId) throws Exception {
+    @DeleteMapping("/admin/delete_user/{companyId}") //works
+    public ResponseEntity deleteUser(@PathVariable long companyId) throws Exception {
         try {
-            userService.removeCompany(companyId);
+            userService.removeUser(companyId);
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .body("Компанията е успешно премахната!");
-        }catch (IllegalArgumentException e){
-            return ResponseEntity
-                    .status(HttpStatus.FORBIDDEN)
-                    .body("Няма потребител с такова id!");
-        }
-    }
-
-    @Transactional
-    @DeleteMapping("/admin/delete_customer/{id}") // works
-    public ResponseEntity deleteCustomer(@PathVariable long id) throws Exception{
-        try {
-            userService.removeCustomer(id);
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Клиентът  беше успешно премахнат!");
+                    .body("Потребителят е успешно премахнат!");
         }catch (IllegalArgumentException e){
             return ResponseEntity
                     .status(HttpStatus.FORBIDDEN)
@@ -142,8 +127,8 @@ public class UserController {
     }
     
     @PutMapping("/company/change_company_information/{phone}") //works //TODO: log in to change info //test after fixing add company
-    public String changePersonalInformation(@RequestBody Users newCompanyData, @PathVariable int phone){
-        userService.changeCompanyInformation(newCompanyData, phone);
+    public String changeCompanyInformation(@RequestBody Users newCompanyData, @PathVariable String email){
+        userService.changePersonalInformation(newCompanyData, email);
 
         return ("Информацията беше успешно обновена!");
     }

@@ -54,7 +54,7 @@ public class UserService {
          }
      }
      
-     public String addCompany (Users user){ //add check if it already exists
+     public String addCompany (Users user){ 
     	 if(userRepository.findByEmail(user.getEmail()) != null) {
     		 return "Вече съществува компания с този имейл!";
     	 }
@@ -71,24 +71,6 @@ public class UserService {
     	 }
     	 
 
-     }
-
-     public void removeCompany ( long id){
-         Users checkIfExists = (Users) userRepository.findById(id);
-         if (checkIfExists != null) {
-             userRepository.deleteById(id);
-         } else {
-             throw new IllegalArgumentException("Не съществува потребител с такова id!");
-         }
-     }
-     
-     public void removeCustomer ( long id){
-         Users checkIfExists = (Users) userRepository.findById(id);
-         if (checkIfExists != null) {
-             userRepository.deleteById(id);
-         } else {
-             throw new IllegalArgumentException("Не съществува потребител с такова id!");
-         }
      }
      
      public String addAdmin (Users user){
@@ -107,17 +89,6 @@ public class UserService {
          return "Админът е добавен успешно!";
     	 }
      }
- 
-     public void changeCompanyInformation(Users newCompanyData, int phone){ 
-         //TODO: check if user is the same as the one being edited, else - exception
-         Users companyToEdit = (Users) userRepository.findByPhoneNumber(phone);
-         //companyToEdit.setCompanyName(newCompanyData.getCompanyName());
-         //companyToEdit.setAdress(newCompanyData.getAdress());
-         companyToEdit.setEmail(newCompanyData.getEmail());
-         companyToEdit.setPhoneNumber(newCompanyData.getPhoneNumber());
-         //TODO: check if you need to remove the company before saving, could be saving same user twice!!
-         userRepository.save(companyToEdit);
-     }
      
      public String addRegisteredCustomer(Users user){
     	 if(userRepository.findByEmail(user.getEmail()) != null) {
@@ -134,10 +105,21 @@ public class UserService {
          userRepository.save(user);
          return "Потребителят е добавен успешно!";
     	 }
- }
+     }
+     
+     public void removeUser ( long id){
+         Users checkIfExists = (Users) userRepository.findById(id);
+         if (checkIfExists != null) {
+             userRepository.deleteById(id);
+         } else {
+             throw new IllegalArgumentException("Не съществува потребител с такова id!");
+         }
+     }
+     
 
-     public void changePersonalInformation(Users newCustomerData, String email){ //
+     public void changePersonalInformation(Users newCustomerData, String email){ 
          //TODO: check if user is the same as the one being edited, else - exception
+    	 //TODO: add option to shange password
          Users customerToEdit = (Users) userRepository.findByEmail(email);
          customerToEdit.setFirstName(newCustomerData.getFirstName());
          customerToEdit.setLastName(newCustomerData.getLastName());
@@ -147,7 +129,7 @@ public class UserService {
          userRepository.save(customerToEdit);
      }
      
-     public String viewProfileInfo(String email){
+     public String viewProfileInfo(String email){ //TODO: add here reservations made by User
     	 Users currUser = userRepository.findByEmail(email);
     	 if(!(currUser == null)) {
     	 return currUser.toString();
