@@ -1,8 +1,11 @@
 package app.PlayingFieldReservations.entitites;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+
+
 
 @Entity
 public class Users {
@@ -24,6 +27,7 @@ public class Users {
         joinColumns = @JoinColumn(name = "user_id"), 
         inverseJoinColumns = @JoinColumn(name = "role_id")) 
     private Set<Role> roles = new HashSet<>();
+    
     
     public void addRole(Role role) {
         this.roles.add(role);

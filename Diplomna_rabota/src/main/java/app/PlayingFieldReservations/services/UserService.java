@@ -1,10 +1,13 @@
 package app.PlayingFieldReservations.services;
 
+import app.PlayingFieldReservations.entitites.Reservation;
 import app.PlayingFieldReservations.entitites.Role;
 import app.PlayingFieldReservations.entitites.Users;
+import app.PlayingFieldReservations.repositories.ReservationRepository;
 import app.PlayingFieldReservations.repositories.RoleRepository;
 import app.PlayingFieldReservations.repositories.UserRepository;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +23,7 @@ public class UserService {
 	UserRepository userRepository;
 	@Autowired
 	RoleRepository roleRepository;
+	@Autowired ReservationService reservationService;
 	
     public Iterable<Users> viewAllCompanies() { //works
         if (userRepository.findAll().isEmpty()) {
@@ -132,7 +136,10 @@ public class UserService {
      public String viewProfileInfo(String email){ //TODO: add here reservations made by User
     	 Users currUser = userRepository.findByEmail(email);
     	 if(!(currUser == null)) {
-    	 return currUser.toString();
+    		 String userData = currUser.toString();
+    		 String reservationsByUser = reservationService.getReservationHistory("{" + currUser.getUsername() + "}");
+    		 
+    		 return userData + ", " +  reservationsByUser;
     	 }
     	 else {
     		 return "Няма намерен потребител!";

@@ -158,7 +158,7 @@ public class UserController {
         return resultString;
     }
 
-    @RequestMapping(value = "/customer/view_profile_info", method = RequestMethod.GET) //test for login
+    @RequestMapping(value = "/view_profile_info", method = RequestMethod.GET) //test for login
     @ResponseBody
     public String customerProfile(Principal principal){
     	String email = principal.getName();
@@ -188,9 +188,9 @@ public class UserController {
         return reservationService.cancelReservation(reservationId, fieldId);
     }
 
-    @GetMapping("/customer/get_reservations_made_by_user/{madeBy}")
+    /*@GetMapping("/customer/get_reservations_made_by_user/{madeBy}")
     public Iterable<Reservation> getReservationsByThisUser(@PathVariable String madeBy){
         return reservationService.getReservationHistory(madeBy);
-    }
+    }*/
 
 }

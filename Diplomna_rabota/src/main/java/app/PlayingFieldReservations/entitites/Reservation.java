@@ -49,4 +49,13 @@ public class Reservation {
     public void setReservationDuration(String reservationDuration) {
         this.reservationDuration = reservationDuration;
     }
+
+	@Override
+	public String toString() {
+		return "Резервация с номер: " + reservationId + ", направена от потребител: " + madeBy 
+				+ ", резервирано игрище: " + fieldName
+				+ ", продължителност на резервацията: " + reservationDuration;
+	}
+    
+    
 }

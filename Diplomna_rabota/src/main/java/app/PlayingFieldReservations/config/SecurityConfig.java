@@ -20,9 +20,6 @@ import app.PlayingFieldReservations.security.CustomUserDetailsService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	
-
-
 	@Bean
 	public UserDetailsService usersDetailsService() {
 		return new CustomUserDetailsService();
@@ -45,8 +42,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers("/customer/cancel_reservation/{reservationId}/{fieldId}");
 	}
 	
-
-	
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
@@ -56,7 +51,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-        .antMatchers("/customer/cancel_reservation/{reservationId}/{fieldId}").permitAll()
+        .antMatchers("/home", "view_all_fields", "/view_all_fields_for_city/{city}").permitAll()
+        .antMatchers("/view_profile_info").hasAnyAuthority("Admin", "Customer", "Company")
+        .antMatchers("/admin/**").hasAuthority("Admin")
         .antMatchers("/customer/**").hasAuthority("Customer")
         .antMatchers("/company/**").hasAuthority("Company")
         .anyRequest().authenticated()
