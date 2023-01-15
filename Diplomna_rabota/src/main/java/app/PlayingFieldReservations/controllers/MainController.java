@@ -34,33 +34,13 @@ public class MainController {
     }
 
     @GetMapping("/view_all_fields") //tested works
-    public ResponseEntity getAllFields(){
-        List<String> allFields = fieldService.getAllFields();
-        if(allFields == null){
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Няма добавени спортни игрища!");
-        }else {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(allFields);
-    }
+    public List<String> getAllFields(){
+        return fieldService.getAllFields();
     }
     
     @GetMapping("/view_all_fields_for_city/{city}") 
-    public ResponseEntity getAllFieldsForCity(@PathVariable String city){
-        List<String> fieldsForCity = fieldService.getAllFieldsByCity(city);
-        if(fieldsForCity == null){
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Няма добавени спортни игрища за избрания град!");
-        }else {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .header("Спортни игрища за посоченият град: " + city)
-                    .body(fieldsForCity);
-            		
-        }
+    public List<String> getAllFieldsForCity(@PathVariable String city){
+        return fieldService.getAllFieldsByCity(city);
     }
     
     @PostMapping("/add_role") //TODO: test!!

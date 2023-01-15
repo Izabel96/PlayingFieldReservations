@@ -3,6 +3,8 @@ package app.PlayingFieldReservations.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.print.attribute.standard.PDLOverrideSupported;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import app.PlayingFieldReservations.entitites.Reservation;
@@ -15,39 +17,40 @@ public class ReservationService {
 	@Autowired
 	ReservationRepository reservationRepository;
 
-	public String reserveField(String madeBy, int id, String duration) {
+	public String reserveField(String madeBy, int id, String duration) { //works TODO: fix after changing state
 		return fieldService.reserve(madeBy, id, duration);
 	}
 	
-	public String cancelReservation(long reservationId, int fieldId) { //TODO: check if there is such reservation
+	public String cancelReservation(long reservationId, int fieldId) { //TODO: fix state issue
 			Reservation toCancel = reservationRepository.findById(reservationId);
-			String reservationPeriod = toCancel.getReservationDuration();
-
-			//duration should be removed from state
-			fieldService.changeFieldState(fieldId, "Свободно"); //this is wrong
-			reservationRepository.delete(toCancel);
-			return "Резервацията е успешно отменена!";
+			if(toCancel == null) {
+				return "Няма резервация с този номер!";
+			}else {
+				String reservationPeriod = toCancel.getReservationDuration();
+				//duration should be removed from state
+				fieldService.changeFieldState(fieldId, "Свободно"); //this is wrong
+				reservationRepository.delete(toCancel);
+				return "Резервацията е успешно отменена!";
+			}
 		}
 	
-    public String getReservationHistory(String madeBy){
+    public String getReservationHistory(String madeBy){ //works
     	String outputString = "";
     	List<Reservation> allReservations = reservationRepository.findAll();
     	List<Reservation> reservationsByUser = new ArrayList<>();
     	
     	for (Reservation reservation : allReservations) {
-    		String nameString = reservation.getMadeBy();
-    		System.out.println(nameString);
-    		System.out.println(madeBy);
 			if(reservation.getMadeBy().equals(madeBy)) {
 				reservationsByUser.add(reservation);
 			}
 		}
-    	System.out.println(reservationsByUser);
     	if(reservationsByUser.isEmpty()) {
     		outputString = "Все още нямате направени резервации!";
     	}else {
     		for (Reservation reservation : reservationsByUser) {
-    			outputString = outputString + reservation.toString() + ", ";
+    			String toString = "Резервация с номер " + reservation.getId() + " за игрище " 
+    		+ reservation.getFieldName() + "за периода: " + reservation.getReservationDuration();
+    			outputString = outputString + toString;
     		}
     	}
     	return outputString;

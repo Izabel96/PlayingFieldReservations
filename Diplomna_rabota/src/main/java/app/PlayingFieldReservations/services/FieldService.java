@@ -22,7 +22,7 @@ public class FieldService {
 	@Autowired
 	ReservationRepository reservationRepository;
 	
-	public String addNewField(Field field) {
+	public String addNewField(Field field) { //works
 		if(fieldRepository.findAll().contains(field)){
 			return "Това игрище вече съществува!";
 		}else {
@@ -31,7 +31,7 @@ public class FieldService {
 		}
 	}
 	@Transactional
-	public void deleteField(int fieldId) {
+	public void deleteField(int fieldId) { //works
 		if(fieldRepository.findByFieldId(fieldId) == null){
 			System.out.println("Не съществува игрище с такова id.");
 		}else {
@@ -39,42 +39,39 @@ public class FieldService {
 		}
 	}
 	
-	public List<String> getAllFields(){
-		if(fieldRepository.findAll() == null){
-			System.out.println("Няма добавени игрища.");
-			return null;
-		}
-		List<Field> allFields = fieldRepository.findAll();
+	public List<String> getAllFields(){ //works
 		List<String> allFieldsToString = new ArrayList<>();
-		for (Field field : allFields) {
-			allFieldsToString.add(field.toString());
-			allFieldsToString.add(System.lineSeparator());
+		
+		if(fieldRepository.findAll() == null){
+			allFieldsToString.add("Няма добавени игрища.");
+		}else {
+			List<Field> allFields = fieldRepository.findAll();
+			for (Field field : allFields) {
+				allFieldsToString.add(field.toString());
+			}
 		}
 		return allFieldsToString;
 	}
 	
-	public List<String> getAllFieldsByCity(String city){ 
-		//TODO: fix message if there are no fields, now returns []
-		if(fieldRepository.findAll() == null){
-			System.out.println("Няма добавени игрища.");
-			return null;
-		}
-		
-		List<Field> allFieldsIterable = fieldRepository.findAll();
+	public List<String> getAllFieldsByCity(String city){ //works
 		List<String> fieldsForCity = new ArrayList<>();
-		System.out.print(city);
-		for (Field field : allFieldsIterable) {
-			String adress = field.getLocation();
-			if(adress.contains(city)) {
-				fieldsForCity.add(field.toString());
-				fieldsForCity.add(System.lineSeparator());
+
+		if(fieldRepository.findAll() == null){
+			fieldsForCity.add("Няма добавени игрища.");
+		}else {
+			List<Field> allFieldsIterable = fieldRepository.findAll();
+			System.out.print(city);
+			for (Field field : allFieldsIterable) {
+				String adress = field.getLocation();
+				if(adress.contains(city)) {
+					fieldsForCity.add(field.toString());
+					fieldsForCity.add(System.lineSeparator());
+				}
+			}
+			if(fieldsForCity.isEmpty()) {
+				fieldsForCity.add("Няма добавени игрища за този град!");
 			}
 		}
-		
-		if(fieldsForCity.isEmpty()) {
-			fieldsForCity.add("Няма добавени игрища за този град!");
-		}
-		
 		return fieldsForCity;
 	}
 	
