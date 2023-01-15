@@ -1,6 +1,8 @@
 package app.PlayingFieldReservations.entitites;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

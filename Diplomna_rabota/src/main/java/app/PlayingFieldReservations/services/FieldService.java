@@ -85,26 +85,22 @@ public class FieldService {
 
 	public void changeFieldState(int fieldId, String state){ //TODO: fix when having to remove certain state
 		Field toEdit = fieldRepository.findByFieldId(fieldId);
-		String newState = "";
+		String changeStateTo = "";
 		if(toEdit.getState().contains(state)) {
-			newState = toEdit.getState().replaceAll(state, "");
-		}else {
-		newState = toEdit.getState() + "\n " + state;
+			changeStateTo = toEdit.getState().replaceAll(state, "");
+			if(changeStateTo.equals("") || changeStateTo.equals(" ")) {
+				changeStateTo = "Свободно";
+			}
 		}
-		toEdit.setState(newState);
+		else if(toEdit.getState().equals("Свободно")) {
+			changeStateTo = state;
+		}else {
+			changeStateTo = toEdit.getState() + " " + state;
+		}
+		toEdit.setState(changeStateTo);
 		fieldRepository.save(toEdit);
 	}
 	
-	/*public void removeReservationPeriod(int fieldId, String duration) {
-		Field toEdit = fieldRepository.findByFieldId(fieldId);
-		String newState = "";
-		if(toEdit.getState().contains(duration)) {
-			newState = toEdit.getState();
-			newState.replaceAll(duration, " ");
-		}
-		toEdit.setState(newState);
-		fieldRepository.save(toEdit);
-	}*/
 
 	public String reserve(String madeBy, int fieldId, String duration) { 
 		Field fieldToReserve = fieldRepository.findByFieldId(fieldId);

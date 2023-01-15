@@ -191,6 +191,6 @@ public class UserController {
     /*@GetMapping("/customer/get_reservations_made_by_user/{madeBy}")
     public Iterable<Reservation> getReservationsByThisUser(@PathVariable String madeBy){
         return reservationService.getReservationHistory(madeBy);
-    }*/
+    }*/ // not needed??
 
 }

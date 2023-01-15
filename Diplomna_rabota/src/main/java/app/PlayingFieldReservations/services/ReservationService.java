@@ -17,7 +17,7 @@ public class ReservationService {
 	@Autowired
 	ReservationRepository reservationRepository;
 
-	public String reserveField(String madeBy, int id, String duration) { //works TODO: fix after changing state
+	public String reserveField(String madeBy, int id, String duration) { //works
 		return fieldService.reserve(madeBy, id, duration);
 	}
 	
@@ -28,7 +28,8 @@ public class ReservationService {
 			}else {
 				String reservationPeriod = toCancel.getReservationDuration();
 				//duration should be removed from state
-				fieldService.changeFieldState(fieldId, "Свободно"); //this is wrong
+				String stateToRemove = "Резервирано за " + reservationPeriod;
+				fieldService.changeFieldState(fieldId, stateToRemove); //this is wrong
 				reservationRepository.delete(toCancel);
 				return "Резервацията е успешно отменена!";
 			}

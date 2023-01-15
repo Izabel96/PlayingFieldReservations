@@ -43,10 +43,10 @@ public class MainController {
         return fieldService.getAllFieldsByCity(city);
     }
     
-    @PostMapping("/add_role") //TODO: test!!
+    @PostMapping("/add_role")
     public String addNewRole(@RequestBody Role role) {
     	roleService.addRole(role);
-    	return "Role successfuly added!";
+    	return "Ролята е успешно добавена!!";
     	
     }
     

@@ -39,7 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/customer/cancel_reservation/{reservationId}/{fieldId}");
+		web.ignoring().antMatchers("/customer/cancel_reservation/{reservationId}/{fieldId}/"
+				, "/customer/reserve_field/{madeBy}/{fieldId}/");
 	}
 	
     @Override
@@ -51,10 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-        .antMatchers("/home", "view_all_fields", "/view_all_fields_for_city/{city}").permitAll()
+        .antMatchers("/home").permitAll()
         .antMatchers("/view_profile_info").hasAnyAuthority("Admin", "Customer", "Company")
         .antMatchers("/admin/**").hasAuthority("Admin")
-        .antMatchers("/customer/**").hasAuthority("Customer")
         .antMatchers("/company/**").hasAuthority("Company")
         .anyRequest().authenticated()
         .and()
