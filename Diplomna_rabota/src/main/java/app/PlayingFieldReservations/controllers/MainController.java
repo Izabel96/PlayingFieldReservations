@@ -45,7 +45,7 @@ public class MainController {
         return (welcome + adminHome + companyHome + customerHome + customerRegister + companyRegister + allFields + byCity);
     }
 
-    @GetMapping("/view_all_fields") //tested works
+    @GetMapping("/view_all_fields") 
     public List<String> getAllFields(){
         return fieldService.getAllFields();
     }
@@ -64,7 +64,6 @@ public class MainController {
     public String addNewRole(@RequestBody Role role) {
     	roleService.addRole(role);
     	return "Ролята е успешно добавена!!";
-    	
     }
     
     @GetMapping("/get_all_roles")

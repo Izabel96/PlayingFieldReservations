@@ -83,9 +83,9 @@ public class UserController {
     }
 
     @Transactional
-    @DeleteMapping("/admin/delete_user/{companyId}")
-    public String deleteUser(@PathVariable long companyId){
-            return userService.removeUser(companyId);
+    @DeleteMapping("/admin/delete_user/{userId}")
+    public String deleteUser(@PathVariable long userId){
+            return userService.removeUser(userId);
     }
 
     @PostMapping("/admin/register_admin")

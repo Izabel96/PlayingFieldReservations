@@ -10,7 +10,6 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     //Boolean existsByEmail(String email);
     Users findByEmail(String email);
     Users findByUsername(String username);
-    Users findByPhoneNumber(int phoneNumber);
     Users findById (long id);
     void deleteById(long id);
     List<Users> findByRolesIn(Set<Role> roles);

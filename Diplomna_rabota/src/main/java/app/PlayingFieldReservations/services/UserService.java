@@ -138,7 +138,7 @@ public class UserService {
      
      @Transactional
      public String removeUser ( long id){
-         Users checkIfExists = (Users) userRepository.findById(id);
+         Users checkIfExists = userRepository.findById(id);
          if (checkIfExists != null) {
         	 checkIfExists.getRoles().clear();
              userRepository.deleteById(id);
@@ -159,7 +159,7 @@ public class UserService {
          customerToEdit.setPassword(passwordEncoder.encode(newUserData.getPassword()));
 
          userRepository.save(customerToEdit);
-         return "Профилната информация беше усппешно обновена!";
+         return "Профилната информация беше успешно обновена!";
      }
      
      public String viewProfileInfo(String email){
