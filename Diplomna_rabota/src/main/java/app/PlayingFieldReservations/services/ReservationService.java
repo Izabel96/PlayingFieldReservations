@@ -17,25 +17,24 @@ public class ReservationService {
 	@Autowired
 	ReservationRepository reservationRepository;
 
-	public String reserveField(String madeBy, int id, String duration) { //works
+	public String reserveField(String madeBy, int id, String duration) {
 		return fieldService.reserve(madeBy, id, duration);
 	}
 	
-	public String cancelReservation(long reservationId, int fieldId) { //TODO: fix state issue
+	public String cancelReservation(long reservationId, int fieldId) {
 			Reservation toCancel = reservationRepository.findById(reservationId);
 			if(toCancel == null) {
 				return "Няма резервация с този номер!";
 			}else {
 				String reservationPeriod = toCancel.getReservationDuration();
-				//duration should be removed from state
 				String stateToRemove = "Резервирано за " + reservationPeriod;
-				fieldService.changeFieldState(fieldId, stateToRemove); //this is wrong
+				fieldService.changeFieldState(fieldId, stateToRemove);
 				reservationRepository.delete(toCancel);
 				return "Резервацията е успешно отменена!";
 			}
 		}
 	
-    public String getReservationHistory(String madeBy){ //works
+    public String getReservationHistory(String madeBy){
     	String outputString = "";
     	List<Reservation> allReservations = reservationRepository.findAll();
     	List<Reservation> reservationsByUser = new ArrayList<>();
@@ -57,11 +56,16 @@ public class ReservationService {
     	return outputString;
     }
     
-    public Iterable<Reservation> viewAllReservations () { //works
+    public String viewAllReservations () {
         if (reservationRepository.findAll().isEmpty()) {
-            return null;
+            return "Няма направени резервации!";
         } else {
-            return reservationRepository.findAll();
+            Iterable<Reservation> reservations =  reservationRepository.findAll();
+            String  resToString = "";
+            for (Reservation reservation : reservations) {
+				resToString = resToString + reservation.toString() + " ";
+			}
+            return resToString;
         }
     }
 	

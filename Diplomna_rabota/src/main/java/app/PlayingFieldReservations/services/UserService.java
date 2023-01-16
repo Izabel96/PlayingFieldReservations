@@ -9,6 +9,9 @@ import app.PlayingFieldReservations.repositories.UserRepository;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,40 +28,64 @@ public class UserService {
 	RoleRepository roleRepository;
 	@Autowired ReservationService reservationService;
 	
-    public Iterable<Users> viewAllCompanies() { //works
+    public String viewAllCompanies() {
         if (userRepository.findAll().isEmpty()) {
-            return null;
+            return "Няма регистрирани потребители!";
         } else {
         	Role roleCompany = roleRepository.findByName("Company");
         	Set<Role> searchRoles = new HashSet<>();
         	searchRoles.add(roleCompany);
-        	return userRepository.findByRolesIn(searchRoles);
+        	Iterable<Users> companies =  userRepository.findByRolesIn(searchRoles);
+        	String companiesToString = "";
+        	for (Users users : companies) {
+				companiesToString = companiesToString + users.toString() + " ";
+			}
+        	if(companiesToString == "") {
+        		companiesToString = "Няма регистрирани компании!";
+        	}
+        	return companiesToString;
         }
     }
 
-     public Iterable<Users> getAllAdmins () {
+     public String getAllAdmins () {
          if (userRepository.findAll().isEmpty()) {
-             return null;
+             return "Няма регистрирани потребители!";
          } else {
          	Role roleAdmin = roleRepository.findByName("Admin");
          	Set<Role> searchRoles = new HashSet<>();
          	searchRoles.add(roleAdmin);
-        	 return userRepository.findByRolesIn(searchRoles);
+         	Iterable<Users> admins =  userRepository.findByRolesIn(searchRoles);
+         	String adminsToString = "";
+         	for (Users users : admins) {
+ 				adminsToString = adminsToString + users.toString() + " ";
+ 			}
+         	if(adminsToString == "") {
+         		adminsToString = "Няма регистрирани компании!";
+         	}
+         	return adminsToString;
          }
      }
      
-     public Iterable<Users> viewAllCustomers () { //works
+     public String viewAllCustomers () {
          if (userRepository.findAll().isEmpty()) {
-             return null;
+             return "Няма регистрирани потребители!";
          } else {
          	Role roleCustomer = roleRepository.findByName("Customer");
          	Set<Role> searchRoles = new HashSet<>();
          	searchRoles.add(roleCustomer);
-         	return userRepository.findByRolesIn(searchRoles);
+         	Iterable<Users> customers =  userRepository.findByRolesIn(searchRoles);
+         	String customersToString = "";
+         	for (Users users : customers) {
+         		customersToString = customersToString + users.toString() + " ";
+ 			}
+         	if(customersToString == "") {
+         		customersToString = "Няма регистрирани компании!";
+         	}
+         	return customersToString;
          }
      }
      
-     public String addCompany (Users user){ 
+     public String addCompany (Users user){
     	 if(userRepository.findByEmail(user.getEmail()) != null) {
     		 return "Вече съществува компания с този имейл!";
     	 }
@@ -73,8 +100,6 @@ public class UserService {
              userRepository.save(user);
              return "Компанията е добавена успешно!";
     	 }
-    	 
-
      }
      
      public String addAdmin (Users user){
@@ -111,29 +136,33 @@ public class UserService {
     	 }
      }
      
-     public void removeUser ( long id){
+     @Transactional
+     public String removeUser ( long id){
          Users checkIfExists = (Users) userRepository.findById(id);
          if (checkIfExists != null) {
+        	 checkIfExists.getRoles().clear();
              userRepository.deleteById(id);
+             return "Потребителят е успешно премахнат!";
          } else {
-             throw new IllegalArgumentException("Не съществува потребител с такова id!");
+             return "Не съществува потребител с такова id!";
          }
      }
      
 
-     public void changePersonalInformation(Users newCustomerData, String email){ 
-         //TODO: check if user is the same as the one being edited, else - exception
-    	 //TODO: add option to shange password
-         Users customerToEdit = (Users) userRepository.findByEmail(email);
-         customerToEdit.setFirstName(newCustomerData.getFirstName());
-         customerToEdit.setLastName(newCustomerData.getLastName());
-         customerToEdit.setEmail(newCustomerData.getEmail());
-         customerToEdit.setPhoneNumber(newCustomerData.getPhoneNumber());
-         //TODO: check if not saving the same user twice!!
+     public String changePersonalInformation(Users newUserData, String email){
+
+         Users customerToEdit = userRepository.findByEmail(email);
+         customerToEdit.setFirstName(newUserData.getFirstName());
+         customerToEdit.setLastName(newUserData.getLastName());
+         customerToEdit.setEmail(newUserData.getEmail());
+         customerToEdit.setPhoneNumber(newUserData.getPhoneNumber());
+         customerToEdit.setPassword(passwordEncoder.encode(newUserData.getPassword()));
+
          userRepository.save(customerToEdit);
+         return "Профилната информация беше усппешно обновена!";
      }
      
-     public String viewProfileInfo(String email){ //TODO: add here reservations made by User
+     public String viewProfileInfo(String email){
     	 Users currUser = userRepository.findByEmail(email);
     	 if(!(currUser == null)) {
     		 String userData = currUser.toString();

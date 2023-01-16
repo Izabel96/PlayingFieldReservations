@@ -39,8 +39,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/customer/cancel_reservation/{reservationId}/{fieldId}/"
-				, "/customer/reserve_field/{madeBy}/{fieldId}/");
+		web.ignoring()
+		.antMatchers("/home")
+		.antMatchers("/view_all_fields")
+		.antMatchers("/view_all_fields_for_city/{city}")
+		.antMatchers("/view_all_fields_for_type/{type}")
+		.antMatchers("/company_add_company")
+		.antMatchers("/customer_register_customer");
 	}
 	
     @Override
@@ -53,9 +58,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
         .antMatchers("/home").permitAll()
-        .antMatchers("/view_profile_info").hasAnyAuthority("Admin", "Customer", "Company")
+        .antMatchers("/view_profile_info", "/change_user_information/{email}").hasAnyAuthority("Admin", "Customer", "Company")
+        .antMatchers("/reserve_field/{madeBy}/{fieldId}", "/cancel_reservation/{reservationId}/{fieldId}")
+        .hasAnyAuthority("Admin", "Customer")
+        .antMatchers("/delete_field/{fieldId}").hasAnyAuthority("Admin", "Company")
         .antMatchers("/admin/**").hasAuthority("Admin")
-        .antMatchers("/company/**").hasAuthority("Company")
+        .antMatchers("/customer/**").hasAuthority("Customer")
+        .antMatchers("/company/**").hasAuthority("Company")        
         .anyRequest().authenticated()
         .and()
         .formLogin().permitAll()

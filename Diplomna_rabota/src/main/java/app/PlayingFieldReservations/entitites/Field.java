@@ -86,7 +86,7 @@ public class Field {
 	public String toString() {
 		String convertedPrice = String.format("%.2f", price);
 		String newLine = System.lineSeparator();
-		return String.format("Спортно игрище " + fieldName + ": идентификационен номер: " + fieldId + ",  локация: " + location + ", вид: " + type
+		return String.format("Спортно игрище " + fieldName + ", идентификационен номер: " + fieldId + ",  локация: " + location + ", вид: " + type
 				+ ", състояние: " + state + ", цена: " + convertedPrice + ", контакт: " + contactInformation
 				+ ", работно време: " + workingHours + newLine);
 	}

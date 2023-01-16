@@ -22,7 +22,7 @@ public class FieldService {
 	@Autowired
 	ReservationRepository reservationRepository;
 	
-	public String addNewField(Field field) { //works
+	public String addNewField(Field field) {
 		if(fieldRepository.findAll().contains(field)){
 			return "Това игрище вече съществува!";
 		}else {
@@ -31,7 +31,7 @@ public class FieldService {
 		}
 	}
 	@Transactional
-	public void deleteField(int fieldId) { //works
+	public void deleteField(int fieldId) {
 		if(fieldRepository.findByFieldId(fieldId) == null){
 			System.out.println("Не съществува игрище с такова id.");
 		}else {
@@ -39,7 +39,7 @@ public class FieldService {
 		}
 	}
 	
-	public List<String> getAllFields(){ //works
+	public List<String> getAllFields(){
 		List<String> allFieldsToString = new ArrayList<>();
 		
 		if(fieldRepository.findAll() == null){
@@ -53,7 +53,7 @@ public class FieldService {
 		return allFieldsToString;
 	}
 	
-	public List<String> getAllFieldsByCity(String city){ //works
+	public List<String> getAllFieldsByCity(String city){
 		List<String> fieldsForCity = new ArrayList<>();
 
 		if(fieldRepository.findAll() == null){
@@ -75,6 +75,28 @@ public class FieldService {
 		return fieldsForCity;
 	}
 	
+	public List<String> getAllFieldsByType(String type){
+		List<String> fieldsForType = new ArrayList<>();
+
+		if(fieldRepository.findAll() == null){
+			fieldsForType.add("Няма добавени игрища.");
+		}else {
+			List<Field> allFieldsIterable = fieldRepository.findAll();
+			System.out.print(type);
+			for (Field field : allFieldsIterable) {
+				String fieldType = field.getType();
+				if(fieldType.contains(type)) {
+					fieldsForType.add(field.toString());
+					fieldsForType.add(System.lineSeparator());
+				}
+			}
+			if(fieldsForType.isEmpty()) {
+				fieldsForType.add("Няма добавени игрища от тип " + type + "!");
+			}
+		}
+		return fieldsForType;
+	}
+	
 	public Field getFieldById(int fieldId){
 		if(fieldRepository.findByFieldId(fieldId) == null){
 			System.out.println("Не съществува потребител с такова id.");
@@ -83,7 +105,7 @@ public class FieldService {
 		return fieldRepository.findByFieldId(fieldId);
 	}
 
-	public void changeFieldState(int fieldId, String state){ //TODO: fix when having to remove certain state
+	public void changeFieldState(int fieldId, String state){
 		Field toEdit = fieldRepository.findByFieldId(fieldId);
 		String changeStateTo = "";
 		if(toEdit.getState().contains(state)) {
@@ -102,7 +124,7 @@ public class FieldService {
 	}
 	
 
-	public String reserve(String madeBy, int fieldId, String duration) { 
+	public String reserve(String madeBy, int fieldId, String duration) {
 		Field fieldToReserve = fieldRepository.findByFieldId(fieldId);
 		Reservation reservation = new Reservation();
 
@@ -125,7 +147,7 @@ public class FieldService {
 		
 	}
 	
-    public String changeFieldInfo(Field newData, int id){ 
+    public String changeFieldInfo(Field newData, int id){
         Field fieldToEdit = (Field) fieldRepository.findByFieldId(id);
         if(fieldToEdit == null) {
         	return "Няма игрище с такова id!";

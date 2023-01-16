@@ -33,164 +33,152 @@ public class UserController {
     @Autowired
     FieldService fieldService;
 
-    @PostMapping("/admin/add_company") //tested, works
-    public String addCompany(@RequestBody Users user){
-        String statusString = userService.addCompany(user);
-        return statusString;
-    }
-
-    @GetMapping("/admin/view_all_companies")// TODO: format better the output
-    public ResponseEntity viewAllCompanies() {
-            Iterable<Users> allCompanies = userService.viewAllCompanies();
-            if(allCompanies == null){
-                return ResponseEntity
-                        .status(HttpStatus.OK)
-                        .body("Няма регистрирани компании!");
-            }else {
-                return ResponseEntity
-                        .status(HttpStatus.OK)
-                        .body(allCompanies);
-            }
-    }
-
-    @GetMapping("/admin/view_all_reservations")// works
-    public ResponseEntity viewAllReservations(){
-        Iterable<Reservation> allReservations = reservationService.viewAllReservations();
-        if(allReservations == null){
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Няма направени резервации!");
-        }else {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(allReservations);
-        }
-    }
-
-    @GetMapping("/admin/view_all_customers") //works
-    public ResponseEntity viewAllCustomers(){
-        Iterable<Users> allCustomers = userService.viewAllCustomers();
-        if(allCustomers == null){
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Няма регистрирани потребители!");
-        }else {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(allCustomers);
-        }
-    }
-
-    @GetMapping("/admin/home") //works, add paths to other methods for admin
-    public String viewAdminHome(){
-        return "Успешно влязохте в адмистраторски профил!";
-    }
-
-    @Transactional
-    @DeleteMapping("/admin/delete_user/{companyId}") //works
-    public ResponseEntity deleteUser(@PathVariable long companyId) throws Exception {
-        try {
-            userService.removeUser(companyId);
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Потребителят е успешно премахнат!");
-        }catch (IllegalArgumentException e){
-            return ResponseEntity
-                    .status(HttpStatus.FORBIDDEN)
-                    .body("Няма потребител с такова id!");
-        }
-    }
-
-    @DeleteMapping("/admin/delete_reservation/{reservationId}/{fieldId}") //works
-    public String deleteReservation (@PathVariable long reservationId, @PathVariable int fieldId){
-        return reservationService.cancelReservation(reservationId, fieldId);
-    }
-
-    @GetMapping("/admin/get_all_admins")
-    public ResponseEntity viewAllAdmins(){
-        Iterable<Users> allAdmins = userService.getAllAdmins();
-        if(allAdmins == null){
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Няма регистрирани админи!");
-        }else {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(allAdmins);
-        }
-    }
-
-    @PostMapping("/admin/register_admin") //tested, works
-    public String addNewAdmin(@RequestBody Users user){
-        String resultString = userService.addAdmin(user);
-        return resultString;
-    }
-    
-    @PutMapping("/company/change_company_information/{phone}") //works //TODO: log in to change info //test after fixing add company
-    public String changeCompanyInformation(@RequestBody Users newCompanyData, @PathVariable String email){
-        userService.changePersonalInformation(newCompanyData, email);
-
-        return ("Информацията беше успешно обновена!");
-    }
-    
-    @PutMapping("/company/change_field_information/{id}") 
-    public String changeFieldInformation(@RequestBody Field newData, @PathVariable int id){
-        return fieldService.changeFieldInfo(newData, id);
-
-    }
-
-    @PostMapping("/company/add_new_field") //works
-    public String addNewField(@RequestBody Field field) {
-        return fieldService.addNewField(field);
-    }
-
-    @Transactional
-    @DeleteMapping("/delete_field/{fieldId}") //works
-    public String removeField(@PathVariable int fieldId){
-        fieldService.deleteField(fieldId);
-
-        return String.format("Игрище с идентификационен номер %d е изтрито!", fieldId);
-    }
-    
-    @PostMapping("/customer/register") //tested, works
-    public String addNewCustomer(@RequestBody Users user){
-        String resultString =  userService.addRegisteredCustomer(user);
-        return resultString;
-    }
-
-    @RequestMapping(value = "/view_profile_info", method = RequestMethod.GET) //test for login
+    @RequestMapping(value = "/view_profile_info", method = RequestMethod.GET) 
     @ResponseBody
     public String customerProfile(Principal principal){
     	String email = principal.getName();
     	System.out.print(email);
         return userService.viewProfileInfo(email);
     }
-
-    @GetMapping("/company/home_page") //test for login
-    public String companyHome(){
-        return "Успешен вход компания!";
+    
+    @PutMapping("/change_user_information/{email}")
+    public String changeUserInformation(@RequestBody Users newCompanyData, @PathVariable String email){
+        return userService.changePersonalInformation(newCompanyData, email);
     }
-
-    @PutMapping("/customer/change_customer_Information/{email}") //works add check to see if such customer exists
-    public String changePersonalInformation(@RequestBody Users newCustomerData,@PathVariable String email){
-        userService.changePersonalInformation(newCustomerData, email);
-
-        return ("Информацията беше успешно обновена!");
+    
+    @DeleteMapping("/delete_field/{fieldId}")
+    public String removeField(@PathVariable int fieldId){
+        fieldService.deleteField(fieldId);
+        return String.format("Игрище с идентификационен номер %d е изтрито!", fieldId);
     }
-
-    @PutMapping("/customer/reserve_field/{madeBy}/{fieldId}") //works
+    
+    @PutMapping("/reserve_field/{madeBy}/{fieldId}")
     public String reserveField(@PathVariable String madeBy, @PathVariable int fieldId, @RequestBody String duration){
         return reservationService.reserveField(madeBy, fieldId, duration);
     }
 
-    @DeleteMapping("/customer/cancel_reservation/{reservationId}/{fieldId}") //works
+    @DeleteMapping("/cancel_reservation/{reservationId}/{fieldId}")
     public String cancelReservation(@PathVariable long reservationId,@PathVariable int fieldId){
         return reservationService.cancelReservation(reservationId, fieldId);
     }
 
-    /*@GetMapping("/customer/get_reservations_made_by_user/{madeBy}")
-    public Iterable<Reservation> getReservationsByThisUser(@PathVariable String madeBy){
-        return reservationService.getReservationHistory(madeBy);
-    }*/ // not needed??
+    @GetMapping("/admin/view_all_companies")
+    public String viewAllCompanies() {
+            return userService.viewAllCompanies();
+    }
+
+    @GetMapping("/admin/view_all_reservations")
+    public String viewAllReservations(){
+        return reservationService.viewAllReservations();
+    }
+
+    @GetMapping("/admin/view_all_customers")
+    public String viewAllCustomers(){
+        return userService.viewAllCustomers();
+    }
+    
+    @GetMapping("/admin/get_all_admins")
+    public String viewAllAdmins(){
+        return userService.getAllAdmins();
+    }
+
+    @Transactional
+    @DeleteMapping("/admin/delete_user/{companyId}")
+    public String deleteUser(@PathVariable long companyId){
+            return userService.removeUser(companyId);
+    }
+
+    @PostMapping("/admin/register_admin")
+    public String addNewAdmin(@RequestBody Users user){
+        String resultString = userService.addAdmin(user);
+        return resultString;
+    }
+    
+    @PutMapping("/company/change_field_information/{id}") 
+    public String changeFieldInformation(@RequestBody Field newData, @PathVariable int id){
+        return fieldService.changeFieldInfo(newData, id);
+    }
+
+    @PostMapping("/company/add_new_field")
+    public String addNewField(@RequestBody Field field) {
+        return fieldService.addNewField(field);
+    }
+    
+    @PostMapping("/company_add_company")
+    public String addCompany(@RequestBody Users user){
+        String statusString = userService.addCompany(user);
+        return statusString;
+    }
+
+    @PostMapping("/customer_register_customer")
+    public String addNewCustomer(@RequestBody Users user){
+        String resultString =  userService.addRegisteredCustomer(user);
+        return resultString;
+    }
+    
+    @GetMapping("/customer/home")
+    public String customerHomePage(){
+        String welcome = "Добре дошли във вашият клиентски профил!\n\n";
+        String menuString = "Меню: \n\n";
+        String profile =
+                "<HTML><body> <a href=\"http://localhost:8080/view_profile_info\">Преглед на профилни данни</a></body></HTML>";
+        String editProfile = 
+        		"<HTML><body> <a href=\"http://localhost:8080/change_user_information/{email}\">Промяна на профилни данни</a></body></HTML>";
+        String newReservation = 
+        		"<HTML><body> <a href=\"http://localhost:8080/reserve_field/{madeBy}/{fieldId}\">Нова резервация</a></body></HTML>";
+        String cancelReservation = 
+        		"<HTML><body> <a href=\"http://localhost:8080/cancel_reservation/{reservationId}/{fieldId}\">Отмяна на резервация</a></body></HTML>";
+        String allFields = 
+        		"<HTML><body> <a href=\"http://localhost:8080/view_all_fields\">Спортни игрища</a></body></HTML>";
+        String byCity = 
+        		"<HTML><body> <a href=\"http://localhost:8080/view_all_fields_for_city/{city}\">Търсене на игрища по град</a></body></HTML>";
+        return (welcome + menuString + profile + editProfile + newReservation + cancelReservation + allFields + byCity);
+    }
+  
+    @GetMapping("/company/home")
+    public String companyHomePage(){
+        String welcome = "Добре дошли във вашият профил!\n\n";
+        String menuString = "Меню: \n\n";
+        String profile =
+                "<HTML><body> <a href=\"http://localhost:8080/view_profile_info\">Преглед на профилни данни</a></body></HTML>";
+        String editProfile = 
+        		"<HTML><body> <a href=\"http://localhost:8080/change_user_information/{email}\">Промяна на профилни данни</a></body></HTML>";
+        String newFields = 
+        		"<HTML><body> <a href=\"http://localhost:8080/company/add_new_field\">Добавяне на ново игрище</a></body></HTML>";
+        String removeFields = 
+        		"<HTML><body> <a href=\"http://localhost:8080/delete_field/{fieldId}\">Изтриване на игрище</a></body></HTML>";
+        String changeFieldInfo = 
+        		"<HTML><body> <a href=\"http://localhost:8080/company/change_field_information/{id}\">Промяна на данни за игрище</a></body></HTML>";
+        return (welcome + menuString + profile + editProfile + newFields + removeFields + changeFieldInfo);
+    }
+    
+    @GetMapping("/admin/home")
+    public String adminHomePage(){
+        String welcome = "Добре дошли във вашият администраторски профил профил!\n\n";
+        String menuString = "Меню: \n\n";
+        String profile =
+                "<HTML><body> <a href=\"http://localhost:8080/view_profile_info\">Преглед на профилни данни</a></body></HTML>";
+        String editProfile = 
+        		"<HTML><body> <a href=\"http://localhost:8080/change_user_information/{email}\">Промяна на профилни данни</a></body></HTML>";
+        String removeUser = 
+        		"<HTML><body> <a href=\"http://localhost:8080/admin/delete_user/{companyId}\">Изтриване на потребител</a></body></HTML>";
+        String removeFields = 
+        		"<HTML><body> <a href=\"http://localhost:8080/delete_field/{fieldId}\">Изтриване на игрище</a></body></HTML>";
+        String cancelReservation = 
+        		"<HTML><body> <a href=\"http://localhost:8080/cancel_reservation/{reservationId}/{fieldId}\">Отмяна на резервация</a></body></HTML>";
+        String viewAllReservation = 
+        		"<HTML><body> <a href=\"http://localhost:8080/admin/view_all_reservations\">Преглед на всички резервации</a></body></HTML>";
+        String viewAllCustomers = 
+        		"<HTML><body> <a href=\"http://localhost:8080/admin/view_all_customers\">Преглед на всички клиенти</a></body></HTML>";
+        String viewAllCompanies = 
+        		"<HTML><body> <a href=\"http://localhost:8080/admin/view_all_companies\">Преглед на всички компании</a></body></HTML>";
+        String viewAllAdmins = 
+        		"<HTML><body> <a href=\"http://localhost:8080/admin/get_all_admins\">Преглед на всички админи</a></body></HTML>";
+        String addNewAdmins = 
+        		"<HTML><body> <a href=\"http://localhost:8080/admin/register_admin\">Преглед на всички админи</a></body></HTML>";
+
+        return (welcome + menuString + profile + editProfile + removeUser + removeFields + cancelReservation
+        		+ viewAllReservation + viewAllCustomers + viewAllCompanies + viewAllAdmins + addNewAdmins);
+    }
 
 }
